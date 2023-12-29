@@ -1,0 +1,8 @@
+api/.dev
+api/.env
+api/.gitignore
+
+frontend/dist
+frontend/node_modules
+frontend/.gitignore
+frontend/coverage
