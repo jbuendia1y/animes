@@ -2,6 +2,8 @@
 
 Una applicación full-stack para guardar y visualizar animes
 
+![App preview](https://github.com/jbuendia1y/animes/assets/71197875/73650792-b9d8-43e5-bce4-4e10858e650e)
+
 ## Desarrollo
 
 Tienes que tener la API y la base de datos corriendo en tu máquina para poder usar la applicación
