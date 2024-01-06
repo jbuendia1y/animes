@@ -2,11 +2,16 @@
   "version": "3",
   "packages": {
     "specifiers": {
+      "npm:@faker-js/faker": "npm:@faker-js/faker@8.3.1",
       "npm:reflect-metadata": "npm:reflect-metadata@0.2.1",
       "npm:reflex": "npm:reflex@1.1.0",
       "npm:tsyringe": "npm:tsyringe@4.8.0"
     },
     "npm": {
+      "@faker-js/faker@8.3.1": {
+        "integrity": "sha512-FdgpFxY6V6rLZE9mmIBb9hM0xpfvQOSNOLnzolzKwsE1DH+gC7lEKV1p1IbR0lAYyvYd5a4u3qWJzowUkw1bIw==",
+        "dependencies": {}
+      },
       "reflect-metadata@0.2.1": {
         "integrity": "sha512-i5lLI6iw9AU3Uu4szRNPPEkomnkjRTaVt9hy/bn5g/oSzekBSMeLZblcjP74AW0vBabqERLLIrz+gR8QYR54Tw==",
         "dependencies": {}
