@@ -1,8 +1,6 @@
-// deno-lint-ignore-file no-explicit-any
 import "npm:reflect-metadata";
 import { API_PREFIX_V1 } from "../../src/constants.ts";
 import { AnimesContoller } from "../../src/controllers/animes.ts";
-import { Paginate } from "../../src/models/index.ts";
 import {
   assert,
   assertEquals,
@@ -10,41 +8,16 @@ import {
   spy,
   testing,
 } from "../../test.deps.ts";
-import { generateAnimeMock } from "../mocks/anime.ts";
 import { mockRequestBody } from "../utils.ts";
 import { Status } from "../../deps.ts";
 import { STATUS_TEXT } from "https://deno.land/std@0.140.0/http/http_status.ts";
-
-const animesMock = [
-  generateAnimeMock("1"),
-  generateAnimeMock("2"),
-  generateAnimeMock("3"),
-  generateAnimeMock("4"),
-  generateAnimeMock("5"),
-];
-
-const AnimesRepoMock = {
-  find(_filter: unknown) {
-    return Promise.resolve(
-      new Paginate({
-        data: animesMock,
-        meta: { total: animesMock.length },
-      }),
-    );
-  },
-  findOne(id: string) {
-    const data = animesMock[0];
-    if (id === data.values.id) return animesMock[0];
-    return null;
-  },
-  update(_data: unknown) {},
-  save(_data: unknown) {},
-};
+import { MockAnimesRepository } from "../mocks/repositories/animes.repository.ts";
 
 Deno.test({
   name: "Animes routes",
   async fn(it) {
-    const controller = new AnimesContoller(AnimesRepoMock as any);
+    const animesRepo = new MockAnimesRepository();
+    const controller = new AnimesContoller(animesRepo);
 
     await it.step("Get animes", async () => {
       const ctx = testing.createMockContext<"/">({
@@ -52,18 +25,18 @@ Deno.test({
       });
       await controller.getAnimes(ctx);
       assertEquals(ctx.response.body, {
-        data: animesMock.map((v) => v.values),
-        meta: { total: animesMock.length },
+        data: animesRepo.data.map((v) => v.values),
+        meta: { total: animesRepo.data.length },
       });
     });
 
     await it.step("Get one anime", async () => {
       const ctx = testing.createMockContext<"/:id">({
         path: API_PREFIX_V1 + "/animes/:id",
-        params: { id: animesMock[0].values.id },
+        params: { id: animesRepo.data[0].values.id },
       });
       await controller.getOneAnime(ctx);
-      assertEquals(ctx.response.body, animesMock[0].values);
+      assertEquals(ctx.response.body, animesRepo.data[0].values);
     });
 
     await it.step("Create anime", async () => {
@@ -88,13 +61,13 @@ Deno.test({
           "https://media.kitsu.io/anime/44107/cover_image/5cf3c261bc51eb0b2c3376aa4893ad49.png",
       };
 
-      const spySaveMethod = spy(AnimesRepoMock, "save");
+      const spySaveMethod = spy(animesRepo, "save");
 
       await controller.createAnime(
         mockRequestBody(ctx, {
           type: "json",
           value: Promise.resolve(mockCreateAnime),
-        }),
+        })
       );
       assert(ctx.response.status, STATUS_TEXT.get(Status.Created));
       assertSpyCalls(spySaveMethod, 1);
