@@ -3,7 +3,7 @@ import { Payload, RouterContext, Status, createJWT, z } from "../../deps.ts";
 import { JWT_ALG, JWT_KEY } from "../config/index.ts";
 import { CreateUser } from "../models/index.ts";
 import { UsersRepository } from "../repositories/users/users.repository.ts";
-import { AuthUtils, getUserFromHeaders } from "../utils/index.ts";
+import { AuthUtils } from "../utils/index.ts";
 import { DI_TOKEN } from "../di.ts";
 
 @injectable()
@@ -67,7 +67,7 @@ export class AuthController {
     ctx.response.status = Status.Created;
   }
   public async profile(ctx: RouterContext<"/profile">) {
-    const user = await getUserFromHeaders(ctx);
+    const user = await AuthUtils.getUserFromHeaders(ctx);
 
     if (!user) {
       ctx.response.status = Status.Unauthorized;
