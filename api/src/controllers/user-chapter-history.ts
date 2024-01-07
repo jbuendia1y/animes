@@ -4,7 +4,7 @@ import {
   UserChapterHistoryFilter,
 } from "../models/index.ts";
 import { UserChapterHistoryRepository } from "../repositories/user-chapter-history/user-chapter-history.repository.ts";
-import { getUserIdFromHeaders } from "../utils/index.ts";
+import { AuthUtils } from "../utils/index.ts";
 import { DI_TOKEN } from "../di.ts";
 import { inject, injectable } from "npm:tsyringe";
 
@@ -16,7 +16,7 @@ export class UserChapterHistoryController {
   ) {}
 
   public async getUserChapterHistory(ctx: RouterContext<"/">) {
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
     if (!userId) {
       ctx.response.status = Status.Unauthorized;
       return;
@@ -43,7 +43,7 @@ export class UserChapterHistoryController {
     ctx.response.body = history;
   }
   public async createUserChapterHistory(ctx: RouterContext<"/">) {
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
 
     const body = ctx.request.body();
     const result = await body.value;

@@ -6,7 +6,7 @@ import {
   UpdateAnimeFavorite,
 } from "../models/index.ts";
 import { AnimeFavoritesRepository } from "../repositories/anime-favorites/anime-favorites.repository.ts";
-import { getUserIdFromHeaders } from "../utils/index.ts";
+import { AuthUtils } from "../utils/index.ts";
 import { DI_TOKEN } from "../di.ts";
 import { inject, injectable } from "npm:tsyringe";
 
@@ -18,7 +18,7 @@ export class AnimeFavoritesController {
   ) {}
 
   public async getAnimeFavorites(ctx: RouterContext<"/">) {
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
     if (!userId) {
       ctx.response.status = Status.Unauthorized;
       return;
@@ -49,7 +49,7 @@ export class AnimeFavoritesController {
   }
 
   public async createAnimeFavorite(ctx: RouterContext<"/">) {
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
     if (!userId) {
       ctx.response.status = Status.Unauthorized;
       return;
@@ -71,7 +71,7 @@ export class AnimeFavoritesController {
 
   public async updateAnimeFavorite(ctx: RouterContext<"/:id">) {
     const favoriteId = ctx.params.id;
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
 
     if (!userId) {
       ctx.response.status = Status.Unauthorized;
@@ -104,7 +104,7 @@ export class AnimeFavoritesController {
 
   public async deleteAnimeFavorite(ctx: RouterContext<"/:id">) {
     const favoriteId = ctx.params.id;
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
 
     if (!userId) {
       ctx.response.status = Status.Unauthorized;
