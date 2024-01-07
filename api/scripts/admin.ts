@@ -1,9 +1,15 @@
-import { bcrypt } from "../deps.ts";
-import { CreateUser } from "../src/models/index.ts";
-import { UsersRepository } from "../src/repositories/users.repository.ts";
+import "npm:reflect-metadata";
+import { MongoClient } from "../deps.ts";
+import { CreateUser } from "../src/models/user/index.ts";
+import { MongoUsersRepository } from "../src/repositories/users/mongo-users.repository.ts";
+import { config } from "../src/config/index.ts";
+import { AuthUtils } from "../src/utils/index.ts";
 
 const main = async () => {
-  const userRepository = new UsersRepository();
+  const client = new MongoClient();
+  const mongoDatabase = await client.connect(config.MONGO_URI);
+  const userRepository = new MongoUsersRepository(mongoDatabase);
+
   const username = prompt("username: ");
   const password = prompt("password: ");
 
@@ -11,8 +17,8 @@ const main = async () => {
     throw new Error("username and password is required");
 
   const body = new CreateUser({ username, password });
-  const salt = await bcrypt.genSalt(10);
-  const passwordHashed = await bcrypt.hash(body.values.password, salt);
+
+  const passwordHashed = await AuthUtils.hashPassword(body.values.password);
   body.setPassword(passwordHashed);
 
   await userRepository.save(body);
