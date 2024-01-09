@@ -9,7 +9,7 @@ export const generateAnimeFavoriteMock = (
 ) => {
   return new AnimeFavorite({
     id: crypto.randomUUID(),
-    stars: faker.number.int({ min: 0, max: 5 }),
+    stars: faker.number.int({ min: 1, max: 5 }),
     animeId: crypto.randomUUID(),
     userId: crypto.randomUUID(),
     ...data,
