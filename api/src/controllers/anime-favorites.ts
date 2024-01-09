@@ -64,7 +64,7 @@ export class AnimeFavoritesController {
 
     await this.repository.save(data);
 
-    ctx.response.status = Status.OK;
+    ctx.response.status = Status.Created;
 
     await emitAnimeFavoriteEvent("create", data);
   }
