@@ -3,9 +3,11 @@ export {
   assert,
   assertEquals,
   assertRejects,
+  assertArrayIncludes,
 } from "https://deno.land/std@0.154.0/testing/asserts.ts";
 export {
   assertSpyCalls,
+  assertSpyCallArg,
   spy,
   stub,
 } from "https://deno.land/std@0.210.0/testing/mock.ts";
