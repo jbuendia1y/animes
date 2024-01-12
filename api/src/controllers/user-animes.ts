@@ -54,7 +54,7 @@ export class UserAnimesController {
 
     await this.repository.save(data);
 
-    ctx.response.status = Status.OK;
+    ctx.response.status = Status.Created;
   }
   public async deleteUserAnimes(ctx: RouterContext<"/:id">) {
     const userId = await AuthUtils.getUserIdFromHeaders(ctx);
