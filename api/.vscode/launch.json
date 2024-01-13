@@ -9,8 +9,17 @@
       "name": "Debug tests",
       "type": "node",
       "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "/home/joaquin/.deno/bin/deno",
-      "runtimeArgs": ["test", "--inspect-wait", "--allow-all"],
+      "runtimeExecutable": "deno",
+      "runtimeArgs": ["task", "test", "--inspect-wait"],
+      "attachSimplePort": 9229
+    },
+    {
+      "request": "launch",
+      "name": "Debug file test",
+      "type": "node",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": ["task", "test", "${file}", "--inspect-wait"],
       "attachSimplePort": 9229
     },
     {
@@ -18,12 +27,12 @@
       "name": "Debug app",
       "type": "node",
       "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "/home/joaquin/.deno/bin/deno",
+      "runtimeExecutable": "deno",
       "runtimeArgs": [
         "run",
         "--allow-all",
         "--allow-read=.",
-        "--inspect",
+        "--inspect-wait",
         "main.ts"
       ],
       "attachSimplePort": 9229
