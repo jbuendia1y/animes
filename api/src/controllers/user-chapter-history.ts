@@ -55,11 +55,12 @@ export class UserChapterHistoryController {
 
     await this.repository.create(data);
 
-    ctx.response.status = Status.OK;
+    ctx.response.status = Status.Created;
   }
   public async deleteUserChapterHistory(ctx: RouterContext<"/:id">) {
     const id = ctx.params.id;
 
     await this.repository.delete(id);
+    ctx.response.status = Status.OK;
   }
 }
