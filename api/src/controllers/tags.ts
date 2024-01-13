@@ -41,6 +41,6 @@ export class TagsController {
     const data = new CreateTag(body);
 
     await this.repository.save(data);
-    ctx.response.status = Status.OK;
+    ctx.response.status = Status.Created;
   }
 }

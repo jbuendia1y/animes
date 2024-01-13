@@ -49,7 +49,7 @@ export class ChapterVideosController {
     const data = new CreateChapterVideo(await result.value);
     await this.repository.save(data);
 
-    ctx.response.status = Status.OK;
+    ctx.response.status = Status.Created;
   }
 
   public async deleteChapterVideo(ctx: RouterContext<"/:id">) {

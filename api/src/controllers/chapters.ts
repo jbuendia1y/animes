@@ -73,6 +73,13 @@ export class ChaptersController {
   public async updateChapter(ctx: RouterContext<"/:id">) {
     const id = ctx.params.id;
     const result = ctx.request.body({ type: "json" });
+
+    const chapter = await this.repository.findOne(id);
+    if (!chapter) {
+      ctx.response.status = Status.BadRequest;
+      return;
+    }
+
     const body = new UpdateChapter(await result.value);
 
     await this.repository.update(id, body);

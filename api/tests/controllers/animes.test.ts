@@ -2,15 +2,14 @@ import "npm:reflect-metadata";
 import { API_PREFIX_V1 } from "../../src/constants.ts";
 import { AnimesContoller } from "../../src/controllers/animes.ts";
 import {
-  assert,
   assertEquals,
   assertSpyCalls,
   spy,
+  stub,
   testing,
 } from "../../test.deps.ts";
 import { mockRequestBody } from "../utils.ts";
 import { Status } from "../../deps.ts";
-import { STATUS_TEXT } from "https://deno.land/std@0.140.0/http/http_status.ts";
 import { MockAnimesRepository } from "../mocks/repositories/animes.repository.ts";
 
 Deno.test({
@@ -39,11 +38,7 @@ Deno.test({
       assertEquals(ctx.response.body, animesRepo.data[0].values);
     });
 
-    await it.step("Create anime", async () => {
-      const ctx = testing.createMockContext<"/">({
-        path: API_PREFIX_V1 + "/animes",
-      });
-
+    await it.step("Create anime", async (it) => {
       const mockCreateAnime = {
         slug: "my-create-anime",
         titles: { en: "My create anime" },
@@ -61,16 +56,54 @@ Deno.test({
           "https://media.kitsu.io/anime/44107/cover_image/5cf3c261bc51eb0b2c3376aa4893ad49.png",
       };
 
-      const spySaveMethod = spy(animesRepo, "save");
+      await it.step("Post create anime", async () => {
+        const ctx = testing.createMockContext<"/">({
+          path: API_PREFIX_V1 + "/animes",
+        });
 
-      await controller.createAnime(
-        mockRequestBody(ctx, {
-          type: "json",
-          value: Promise.resolve(mockCreateAnime),
-        })
-      );
-      assert(ctx.response.status, STATUS_TEXT.get(Status.Created));
-      assertSpyCalls(spySaveMethod, 1);
+        const spySaveMethod = spy(animesRepo, "save");
+
+        await controller.createAnime(
+          mockRequestBody(ctx, {
+            type: "json",
+            value: Promise.resolve(mockCreateAnime),
+          })
+        );
+        assertEquals(ctx.response.status, Status.Created);
+        assertSpyCalls(spySaveMethod, 1);
+
+        spySaveMethod.restore();
+      });
+
+      await it.step("Get created anime", async () => {
+        const ctx = testing.createMockContext<"/">({
+          path:
+            API_PREFIX_V1 +
+            "/animes" +
+            "?" +
+            new URLSearchParams({ slug: mockCreateAnime.slug }).toString(),
+        });
+
+        const anime = animesRepo.data.find(
+          (v) => v.values.slug === mockCreateAnime.slug
+        );
+
+        const mockFind = stub(animesRepo, "find", (_filter) => {
+          return Promise.resolve({
+            values: {
+              data: anime ? [anime] : [],
+              meta: { total: animesRepo.data.length },
+            },
+            // deno-lint-ignore no-explicit-any
+          } as any);
+        });
+        await controller.getAnimes(ctx);
+        const response = (
+          ctx.response.body as { data: Array<{ slug: string }> }
+        ).data[0].slug;
+        assertEquals(response, mockCreateAnime.slug);
+        mockFind.restore();
+      });
     });
   },
 });
