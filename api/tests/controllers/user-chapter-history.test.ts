@@ -12,11 +12,12 @@ type GETResponseBody = { data: unknown[]; meta: { total: number } };
 const TEST_BASE_PATH = API_PREFIX_V1 + "/animes/history";
 
 const setup = (data: { mockUserId?: string | null } = {}) => {
-  const mockGetUserIdFromHeader = data.mockUserId
-    ? stub(AuthUtils, "getUserIdFromHeaders", () =>
-        Promise.resolve(data.mockUserId as string | null)
-      )
-    : undefined;
+  const mockGetUserIdFromHeader =
+    data.mockUserId !== undefined
+      ? stub(AuthUtils, "getUserIdFromHeaders", () =>
+          Promise.resolve(data.mockUserId as string | null)
+        )
+      : undefined;
 
   const userChapterHistoryRepo = new MockUserChapterHistoryRepository();
   const controller = new UserChapterHistoryController(userChapterHistoryRepo);
