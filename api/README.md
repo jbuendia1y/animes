@@ -25,6 +25,13 @@ docker exec -it mymongodb bash
 mongosh -u root -p example
 ```
 
+Crea el archivo .env
+
+```bash
+# Puedes modificar tu archivo .env
+cp .env.example .env
+```
+
 Luego de tener tu base de datos, instala las dependencias e inicie el servidor
 
 ```bash

@@ -1,0 +1,5 @@
+scripts:
+  pre-commit:
+    cmd:
+      - cd api && deno task test
+    gitHook: pre-commit
