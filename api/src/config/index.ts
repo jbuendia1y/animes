@@ -1,5 +1,7 @@
 import { loadEnvs } from "../../deps.ts";
 
+export const DENO_ENV = Deno.env.get("DENO_ENV");
+
 const env = await loadEnvs();
 const encoder = new TextEncoder();
 
@@ -13,12 +15,10 @@ export const JWT_KEY = await crypto.subtle.importKey(
   ["sign", "verify"]
 );
 
-export const NODE_ENV = Deno.env.get("NODE_ENV");
-
 const MONGO_URI = Deno.env.get("MONGO_URI") ?? env["MONGO_URI"];
 export const config = {
   MONGO_URI:
-    NODE_ENV == "test"
+    DENO_ENV == "test"
       ? (MONGO_URI.endsWith("/") ? MONGO_URI : MONGO_URI + "/") + "app_testing"
       : MONGO_URI,
   PORT: Deno.env.get("PORT") ?? env["PORT"],

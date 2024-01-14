@@ -2,7 +2,7 @@ import "npm:reflect-metadata";
 import { container } from "npm:tsyringe";
 
 import { Application, MongoClient, joinPath, oakCors } from "./deps.ts";
-import { config } from "./src/config/index.ts";
+import { DENO_ENV, config } from "./src/config/index.ts";
 import { API_PREFIX_V1 } from "./src/constants.ts";
 import { initAnimeFavoriteEvents } from "./src/events/anime-favorite.event.ts";
 import { initChapterEvents } from "./src/events/chapters.event.ts";
@@ -112,7 +112,7 @@ for await (const dir of Deno.readDir(routesPath)) {
 }
 
 // Production middlewares
-if (Deno.env.get("NODE_ENV") === "production") {
+if (DENO_ENV === "production") {
   app.use(async (ctx, next) => {
     if (ctx.request.url.pathname.startsWith(API_PREFIX_V1)) {
       await next();
