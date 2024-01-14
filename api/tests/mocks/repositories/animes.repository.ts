@@ -48,10 +48,18 @@ export class MockAnimesRepository implements AnimesRepository {
   }
   update(id: string, data: UpdateAnime) {
     const idx = this.data.findIndex((v) => v.values.id === id);
+    const { stars, ...values } = data.values;
+
+    const starsUpdated = { ...this.data[idx].values.stars };
+    if (stars?.type === "increment")
+      starsUpdated[stars.star] = starsUpdated[stars.star] + 1;
+    if (stars?.type === "decrement")
+      starsUpdated[stars.star] = starsUpdated[stars.star] - 1;
 
     this.data[idx] = new Anime({
       ...this.data[idx].values,
-      ...data.values,
+      ...values,
+      stars: starsUpdated,
       updatedAt: new Date(),
     });
 
