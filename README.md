@@ -31,8 +31,6 @@ docker compose up --env-file ./.env
 
 Crea una issue antes de realizar una pull request para ver que se va a cambiar
 
-Activa los git-hooks
-
 > [!IMPORTANT]
 > Activa los git-hooks
 >
