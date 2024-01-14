@@ -1,9 +1,10 @@
-import { MongoDatabase, ObjectId } from "../../deps.ts";
 import {
   AnimeFavorite,
   CreateAnimeFavorite,
+  UpdateAnime,
   UpdateAnimeFavorite,
 } from "../models/index.ts";
+import { AnimesRepository } from "../repositories/animes/animes.repository.ts";
 
 export const CreateAnimeFavoriteEvent = "@anime-favorite/create";
 export const UpdateAnimeFavoriteEvent = "@anime-favorite/update";
@@ -36,19 +37,25 @@ export const emitAnimeFavoriteEvent = async (
   }
 };
 
-export const initAnimeFavoriteEvents = (db: MongoDatabase) => {
+export const initAnimeFavoriteEvents = (animesRepo: AnimesRepository) => {
   subscribeAnimeFavoriteEvent(
     CreateAnimeFavoriteEvent,
     async (payload: unknown) => {
-      if (payload instanceof CreateAnimeFavorite) {
-        if (payload.values.stars > 5) return;
-        await db
-          .collection("animes")
-          .updateOne(
-            { _id: ObjectId.createFromHexString(payload.values.animeId) },
-            { $inc: { [`stars.${payload.values.stars}`]: 1 } }
-          );
-      }
+      if (!(payload instanceof CreateAnimeFavorite)) return;
+
+      if (payload.values.stars > 5) return;
+      await animesRepo.update(
+        payload.values.animeId,
+        new UpdateAnime({
+          stars: { type: "increment", star: payload.values.stars },
+        })
+      );
+      // await db
+      //   .collection("animes")
+      //   .updateOne(
+      //     { _id: ObjectId.createFromHexString(payload.values.animeId) },
+      //     { $inc: { [`stars.${payload.values.stars}`]: 1 } }
+      //   );
     }
   );
 
@@ -62,17 +69,36 @@ export const initAnimeFavoriteEvents = (db: MongoDatabase) => {
         toUpdateData: UpdateAnimeFavorite;
       };
 
-      if (!before || !toUpdateData) return;
+      if (
+        !before ||
+        !toUpdateData ||
+        !(before instanceof AnimeFavorite) ||
+        !(toUpdateData instanceof UpdateAnimeFavorite)
+      )
+        return;
 
-      await db.collection("animes").updateOne(
-        { _id: ObjectId.createFromHexString(before.values.animeId) },
-        {
-          $inc: {
-            [`stars.${before.values.stars}`]: -1,
-            [`stars.${toUpdateData.values.stars}`]: 1,
-          },
-        }
+      await animesRepo.update(
+        before.values.animeId,
+        new UpdateAnime({
+          stars: { star: before.values.stars, type: "decrement" },
+        })
       );
+      await animesRepo.update(
+        before.values.animeId,
+        new UpdateAnime({
+          stars: { star: toUpdateData.values.stars, type: "increment" },
+        })
+      );
+
+      // await db.collection("animes").updateOne(
+      //   { _id: ObjectId.createFromHexString(before.values.animeId) },
+      //   {
+      //     $inc: {
+      //       [`stars.${before.values.stars}`]: -1,
+      //       [`stars.${toUpdateData.values.stars}`]: 1,
+      //     },
+      //   }
+      // );
     }
   );
 
@@ -83,14 +109,21 @@ export const initAnimeFavoriteEvents = (db: MongoDatabase) => {
 
       const { before } = payload as { before: AnimeFavorite };
 
-      if (!before) return;
+      if (!before || !(before instanceof AnimeFavorite)) return;
 
-      await db
-        .collection("animes")
-        .updateOne(
-          { _id: ObjectId.createFromHexString(before.values.animeId) },
-          { $inc: { [`stars.${before.values.stars}`]: -1 } }
-        );
+      await animesRepo.update(
+        before.values.animeId,
+        new UpdateAnime({
+          stars: { star: before.values.stars, type: "decrement" },
+        })
+      );
+
+      // await db
+      //   .collection("animes")
+      //   .updateOne(
+      //     { _id: ObjectId.createFromHexString(before.values.animeId) },
+      //     { $inc: { [`stars.${before.values.stars}`]: -1 } }
+      //   );
     }
   );
 };
