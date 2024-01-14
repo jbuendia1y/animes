@@ -4,8 +4,8 @@
 
 - [ ] Crear un middleware que haga un log para cada petición y guardar los logs en un archivo o base de datos
 - [ ] Crear un límite de intentos de login
-- [X] Añadir Dependency Injection
-- [ ] Añadir Unit Testing
+- [x] Añadir Dependency Injection
+- [x] Añadir Unit Testing
 
 ## Frontend
 
