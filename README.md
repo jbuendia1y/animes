@@ -33,7 +33,10 @@ Crea una issue antes de realizar una pull request para ver que se va a cambiar
 
 Activa los git-hooks
 
-```bash
-deno install -qAn vr https://deno.land/x/velociraptor@1.5.0/cli.ts
-vr
-```
+> [!IMPORTANT]
+> Activa los git-hooks
+>
+> ```bash
+> deno install -qAn vr https://deno.land/x/velociraptor@1.5.0/cli.ts
+> vr
+> ```
