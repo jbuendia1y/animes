@@ -1,5 +1,10 @@
 import { RouterContext, Status, getQuery } from "../../deps.ts";
-import { emitAnimeFavoriteEvent } from "../events/anime-favorite.event.ts";
+import {
+  CreateAnimeFavoriteEvent,
+  DeleteAnimeFavoriteEvent,
+  UpdateAnimeFavoriteEvent,
+  emitAnimeFavoriteEvent,
+} from "../events/anime-favorite.event.ts";
 import {
   AnimeFavoriteFilter,
   CreateAnimeFavorite,
@@ -66,7 +71,7 @@ export class AnimeFavoritesController {
 
     ctx.response.status = Status.Created;
 
-    await emitAnimeFavoriteEvent("create", data);
+    await emitAnimeFavoriteEvent(CreateAnimeFavoriteEvent, data);
   }
 
   public async updateAnimeFavorite(ctx: RouterContext<"/:id">) {
@@ -96,7 +101,7 @@ export class AnimeFavoritesController {
     await this.repository.update(favoriteId, data);
     ctx.response.status = Status.OK;
 
-    await emitAnimeFavoriteEvent("update", {
+    await emitAnimeFavoriteEvent(UpdateAnimeFavoriteEvent, {
       before: beforeUpdate,
       toUpdateData: data,
     });
@@ -125,7 +130,7 @@ export class AnimeFavoritesController {
     await this.repository.delete(favoriteId);
     ctx.response.status = Status.OK;
 
-    await emitAnimeFavoriteEvent("delete", {
+    await emitAnimeFavoriteEvent(DeleteAnimeFavoriteEvent, {
       before: beforeDelete,
     });
   }
