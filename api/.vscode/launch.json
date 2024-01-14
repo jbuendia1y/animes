@@ -1,0 +1,41 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "request": "launch",
+      "name": "Debug tests",
+      "type": "node",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": ["task", "test", "--inspect-wait"],
+      "attachSimplePort": 9229
+    },
+    {
+      "request": "launch",
+      "name": "Debug file test",
+      "type": "node",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": ["task", "test", "${file}", "--inspect-wait"],
+      "attachSimplePort": 9229
+    },
+    {
+      "request": "launch",
+      "name": "Debug app",
+      "type": "node",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": [
+        "run",
+        "--allow-all",
+        "--allow-read=.",
+        "--inspect-wait",
+        "main.ts"
+      ],
+      "attachSimplePort": 9229
+    }
+  ]
+}

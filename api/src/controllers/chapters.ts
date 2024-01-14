@@ -1,5 +1,8 @@
 import { RouterContext, Status, getQuery, z } from "../../deps.ts";
-import { emitChapterEvent } from "../events/chapters.event.ts";
+import {
+  CreateChapterEvent,
+  emitChapterEvent,
+} from "../events/chapters.event.ts";
 import {
   ChapterFilter,
   CreateChapter,
@@ -66,13 +69,20 @@ export class ChaptersController {
     const data = new CreateChapter(await result.value);
 
     await this.repository.save(data);
-    await emitChapterEvent("create", data);
+    await emitChapterEvent(CreateChapterEvent, data);
     ctx.response.status = Status.Created;
   }
 
   public async updateChapter(ctx: RouterContext<"/:id">) {
     const id = ctx.params.id;
     const result = ctx.request.body({ type: "json" });
+
+    const chapter = await this.repository.findOne(id);
+    if (!chapter) {
+      ctx.response.status = Status.BadRequest;
+      return;
+    }
+
     const body = new UpdateChapter(await result.value);
 
     await this.repository.update(id, body);

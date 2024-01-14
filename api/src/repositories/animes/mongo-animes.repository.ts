@@ -58,10 +58,19 @@ export class MongoAnimesRepository implements AnimesRepository {
   }
 
   async update(id: string, data: UpdateAnime) {
+    const { stars, ...values } = data.values;
+
+    let incOrDec = {};
+    if (stars?.type === "increment")
+      incOrDec = { $inc: { [`stars.${stars.star}`]: 1 } };
+    if (stars?.type === "decrement")
+      incOrDec = { $inc: { [`stars.${stars.star}`]: -1 } };
+
     await this.collection.updateOne(
       { _id: ObjectId.createFromHexString(id) },
       {
-        $set: { ...data.values, updatedAt: new Date() },
+        $set: { ...values, updatedAt: new Date() },
+        ...incOrDec,
       }
     );
   }

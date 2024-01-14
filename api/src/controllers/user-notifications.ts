@@ -5,7 +5,7 @@ import {
   UserNotificationsFilter,
 } from "../models/index.ts";
 import { UserNotificationsRepository } from "../repositories/user-notifications/user-notifications.repository.ts";
-import { getUserIdFromHeaders } from "../utils/index.ts";
+import { AuthUtils } from "../utils/index.ts";
 import { DI_TOKEN } from "../di.ts";
 import { inject, injectable } from "npm:tsyringe";
 
@@ -18,7 +18,7 @@ export class UserNotificationsController {
 
   public async getUserNotifications(ctx: RouterContext<"/">) {
     const query = getQuery(ctx);
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
 
     const options: { [key: string]: string | boolean } = {};
 
@@ -60,7 +60,7 @@ export class UserNotificationsController {
     ctx.response.status = Status.OK;
   }
   public async deleteUserNotification(ctx: RouterContext<"/:id">) {
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
     const id = ctx.params.id;
 
     if (!userId) {

@@ -5,7 +5,7 @@ import {
   UserAnimeFilter,
 } from "../models/user-anime/index.ts";
 import { UserAnimesRepository } from "../repositories/user-anime/user-anime.repository.ts";
-import { getUserIdFromHeaders } from "../utils/index.ts";
+import { AuthUtils } from "../utils/index.ts";
 import { DI_TOKEN } from "../di.ts";
 import { inject, injectable } from "npm:tsyringe";
 
@@ -16,7 +16,7 @@ export class UserAnimesController {
   ) {}
 
   public async getUserAnimes(ctx: RouterContext<"/">) {
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
     const query = getQuery(ctx);
 
     if (!userId) {
@@ -46,7 +46,7 @@ export class UserAnimesController {
     ctx.response.body = data;
   }
   public async createUserAnimes(ctx: RouterContext<"/">) {
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
     const result = ctx.request.body({ type: "json" });
     const body = await result.value;
 
@@ -54,10 +54,10 @@ export class UserAnimesController {
 
     await this.repository.save(data);
 
-    ctx.response.status = Status.OK;
+    ctx.response.status = Status.Created;
   }
   public async deleteUserAnimes(ctx: RouterContext<"/:id">) {
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
 
     if (!userId) {
       ctx.response.status = Status.Unauthorized;

@@ -1,12 +1,17 @@
 import { RouterContext, Status, getQuery } from "../../deps.ts";
-import { emitAnimeFavoriteEvent } from "../events/anime-favorite.event.ts";
+import {
+  CreateAnimeFavoriteEvent,
+  DeleteAnimeFavoriteEvent,
+  UpdateAnimeFavoriteEvent,
+  emitAnimeFavoriteEvent,
+} from "../events/anime-favorite.event.ts";
 import {
   AnimeFavoriteFilter,
   CreateAnimeFavorite,
   UpdateAnimeFavorite,
 } from "../models/index.ts";
 import { AnimeFavoritesRepository } from "../repositories/anime-favorites/anime-favorites.repository.ts";
-import { getUserIdFromHeaders } from "../utils/index.ts";
+import { AuthUtils } from "../utils/index.ts";
 import { DI_TOKEN } from "../di.ts";
 import { inject, injectable } from "npm:tsyringe";
 
@@ -18,7 +23,7 @@ export class AnimeFavoritesController {
   ) {}
 
   public async getAnimeFavorites(ctx: RouterContext<"/">) {
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
     if (!userId) {
       ctx.response.status = Status.Unauthorized;
       return;
@@ -49,7 +54,7 @@ export class AnimeFavoritesController {
   }
 
   public async createAnimeFavorite(ctx: RouterContext<"/">) {
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
     if (!userId) {
       ctx.response.status = Status.Unauthorized;
       return;
@@ -64,14 +69,14 @@ export class AnimeFavoritesController {
 
     await this.repository.save(data);
 
-    ctx.response.status = Status.OK;
+    ctx.response.status = Status.Created;
 
-    await emitAnimeFavoriteEvent("create", data);
+    await emitAnimeFavoriteEvent(CreateAnimeFavoriteEvent, data);
   }
 
   public async updateAnimeFavorite(ctx: RouterContext<"/:id">) {
     const favoriteId = ctx.params.id;
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
 
     if (!userId) {
       ctx.response.status = Status.Unauthorized;
@@ -96,7 +101,7 @@ export class AnimeFavoritesController {
     await this.repository.update(favoriteId, data);
     ctx.response.status = Status.OK;
 
-    await emitAnimeFavoriteEvent("update", {
+    await emitAnimeFavoriteEvent(UpdateAnimeFavoriteEvent, {
       before: beforeUpdate,
       toUpdateData: data,
     });
@@ -104,7 +109,7 @@ export class AnimeFavoritesController {
 
   public async deleteAnimeFavorite(ctx: RouterContext<"/:id">) {
     const favoriteId = ctx.params.id;
-    const userId = await getUserIdFromHeaders(ctx);
+    const userId = await AuthUtils.getUserIdFromHeaders(ctx);
 
     if (!userId) {
       ctx.response.status = Status.Unauthorized;
@@ -125,7 +130,7 @@ export class AnimeFavoritesController {
     await this.repository.delete(favoriteId);
     ctx.response.status = Status.OK;
 
-    await emitAnimeFavoriteEvent("delete", {
+    await emitAnimeFavoriteEvent(DeleteAnimeFavoriteEvent, {
       before: beforeDelete,
     });
   }
