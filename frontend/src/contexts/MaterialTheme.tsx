@@ -20,6 +20,16 @@ const theme = createTheme({
         root: {
           ":disabled": {
             backgroundColor: "#D8D8D8",
+            color: "#9D9D9D",
+          },
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          ":disabled": {
+            color: "#9D9D9D",
           },
         },
       },

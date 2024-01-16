@@ -42,7 +42,7 @@ router.post(
       ctx.response.body = { message: "This username is already taken" };
     }
   }),
-  controller.register
+  controller.register.bind(controller)
 );
 
 router.get("/profile", authMiddleware(), controller.profile.bind(controller));

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  Alert,
   Box,
   Button,
   Container,
@@ -12,7 +13,7 @@ import {
 import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { Navbar } from "../../components";
 import { z } from "zod";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../hooks";
 import { AxiosError } from "axios";
 
@@ -21,10 +22,38 @@ const LoginSchema = z.object({
   password: z.string().nonempty(),
 });
 
+const MAX_REQUESTS = 15 as const;
+const RATE_LIMIT_TIME_WAIT = 60 as const;
+
 export function Login() {
-  const [errors, setErrors] = useState({ username: false, password: false });
+  const [errors, setErrors] = useState({
+    username: false,
+    password: false,
+    rateLimit: false,
+  });
   const { login } = useAuth();
   const navigate = useNavigate();
+  const rateLimitRef = useRef(0);
+  const [rateLimitTime, setRateLimitTime] = useState(0);
+
+  useEffect(() => {
+    if (!errors.rateLimit) return;
+    const interval = setInterval(() => {
+      setRateLimitTime((v) => {
+        if (v === RATE_LIMIT_TIME_WAIT) {
+          setErrors((v) => ({ ...v, rateLimit: false }));
+          rateLimitRef.current = 0;
+          clearInterval(interval);
+          return 0;
+        }
+        return v + 1;
+      });
+    }, 1000);
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [errors]);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,7 +66,7 @@ export function Login() {
     let parsed: z.infer<typeof LoginSchema> | undefined;
     try {
       parsed = LoginSchema.parse(data);
-      setErrors({ username: false, password: false });
+      setErrors((v) => ({ ...v, username: false, password: false }));
     } catch (err: any) {
       if (err instanceof z.ZodError) {
         const errors = err.issues.map((v) => {
@@ -45,10 +74,11 @@ export function Login() {
           return path;
         });
 
-        setErrors(
+        setErrors((v) =>
           errors.reduce((acc, value) => ({ ...acc, [value]: true }), {
             username: false,
             password: false,
+            rateLimit: v.rateLimit,
           })
         );
 
@@ -64,7 +94,11 @@ export function Login() {
       navigate("/");
     } catch (err: any) {
       if (err instanceof AxiosError) {
-        setErrors({ username: true, password: true });
+        if (rateLimitRef.current === MAX_REQUESTS) {
+          setErrors((v) => ({ ...v, rateLimit: true }));
+        }
+        rateLimitRef.current += 1;
+        setErrors((v) => ({ ...v, username: true, password: true }));
       }
     }
   };
@@ -129,15 +163,24 @@ export function Login() {
             >
               ¿ Olvidaste tu contraseña ?
             </Link>
+
             <Button
               type="submit"
               variant="contained"
               fullWidth
+              disabled={errors.rateLimit}
               sx={{ textTransform: "none", fontWeight: "bold" }}
             >
               Iniciar sessión
             </Button>
           </Stack>
+
+          {errors.rateLimit ? (
+            <Alert severity="error">
+              Hizo demasiadas peticiónes, tome un descanso{" "}
+              {RATE_LIMIT_TIME_WAIT - rateLimitTime}s
+            </Alert>
+          ) : null}
           <Link
             component={ReactLink}
             to="/register"
