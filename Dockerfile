@@ -7,7 +7,7 @@ COPY ./frontend/ .
 RUN npm i
 RUN npm run build
 
-FROM denoland/deno:alpine-1.38.5
+FROM denoland/deno:alpine-1.39.4
 
 WORKDIR /api
 
