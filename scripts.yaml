@@ -1,5 +1,13 @@
 scripts:
+  commit:
+    cmd:
+      - deno run -A --unstable npm:git-cz
   pre-commit:
     cmd:
-      - cd api && deno task test
+      - cd api && deno fmt && deno lint
+      - cd frontend && pnpm lint
     gitHook: pre-commit
+  pre-push:
+    cmd:
+      - cd api && deno task test
+    gitHook: pre-push
