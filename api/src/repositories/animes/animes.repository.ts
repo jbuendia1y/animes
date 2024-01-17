@@ -1,10 +1,10 @@
 import type {
   Anime,
-  CreateAnime,
-  UpdateAnime,
-  AnimeList,
   AnimeFilter,
+  AnimeList,
+  CreateAnime,
   Paginate,
+  UpdateAnime,
 } from "../../models/index.ts";
 
 export interface AnimesRepository {

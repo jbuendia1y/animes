@@ -40,7 +40,7 @@ Deno.test({
       const mockComparePassword = stub(
         AuthUtils,
         "comparePasswords",
-        (hashed, input) => Promise.resolve(hashed === input)
+        (hashed, input) => Promise.resolve(hashed === input),
       );
 
       await it.step("Should fail", async () => {
@@ -95,7 +95,7 @@ Deno.test({
         const mockComparePassword = stub(
           AuthUtils,
           "comparePasswords",
-          (hashed, input) => Promise.resolve(hashed === input)
+          (hashed, input) => Promise.resolve(hashed === input),
         );
 
         // Getting token
@@ -109,7 +109,7 @@ Deno.test({
               username: commonUser.values.username,
               password: commonUser.values.password,
             }),
-          }
+          },
         );
         await controller.login(loginCtx);
         const loginResBody = loginCtx.response.body as { access_token: string };

@@ -7,7 +7,7 @@ import { ChapterVideosController } from "../controllers/index.ts";
 import { container } from "npm:tsyringe";
 
 const controller = container.resolve<ChapterVideosController>(
-  ChapterVideosController.name
+  ChapterVideosController.name,
 );
 
 export const router = new Router({
@@ -28,7 +28,7 @@ router.post(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
@@ -36,7 +36,7 @@ router.post(
       ctx.response.status = Status.Forbidden;
     }
   }),
-  controller.createChapterVideo.bind(controller)
+  controller.createChapterVideo.bind(controller),
 );
 
 router.delete(
@@ -44,7 +44,7 @@ router.delete(
   authMiddleware({
     role: "isAdmin",
   }),
-  controller.deleteChapterVideo.bind(controller)
+  controller.deleteChapterVideo.bind(controller),
 );
 
 router.patch(
@@ -57,10 +57,10 @@ router.patch(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
   }),
-  controller.updateChapterVideo.bind(controller)
+  controller.updateChapterVideo.bind(controller),
 );

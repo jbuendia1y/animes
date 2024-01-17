@@ -1,7 +1,7 @@
 import { DBUserChapterHistory, UserChapterHistory } from "../models/index.ts";
 
 export const createUserChapterHistoryAddapted = (
-  data: DBUserChapterHistory
+  data: DBUserChapterHistory,
 ): UserChapterHistory => {
   return new UserChapterHistory({
     id: data._id.toString(),

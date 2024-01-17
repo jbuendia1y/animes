@@ -13,18 +13,17 @@ import { inject, injectable } from "npm:tsyringe";
 
 @injectable()
 export class MongoUserChapterHistoryRepository
-  implements UserChapterHistoryRepository
-{
+  implements UserChapterHistoryRepository {
   private collection: MongoCollection<DBUserChapterHistory>;
 
   constructor(@inject(DI_TOKEN.DATABASE) database: MongoDatabase) {
     this.collection = database.collection<DBUserChapterHistory>(
-      "user-chapter-histories"
+      "user-chapter-histories",
     );
   }
 
   async find(
-    filter: UserChapterHistoryFilter
+    filter: UserChapterHistoryFilter,
   ): Promise<Paginate<UserChapterHistory[]>> {
     const values = filter.values;
     const options = values.options;

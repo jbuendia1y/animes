@@ -15,12 +15,9 @@ const setup = ({ mockUserId }: { mockUserId?: string | null } = {}) => {
   const userNotificationsRepo = new MockUserNotificationsRepository();
   const controller = new UserNotificationsController(userNotificationsRepo);
 
-  const userIdAuthMock =
-    mockUserId !== undefined
-      ? stub(AuthUtils, "getUserIdFromHeaders", () =>
-          Promise.resolve(mockUserId)
-        )
-      : undefined;
+  const userIdAuthMock = mockUserId !== undefined
+    ? stub(AuthUtils, "getUserIdFromHeaders", () => Promise.resolve(mockUserId))
+    : undefined;
 
   return {
     controller,
@@ -52,7 +49,7 @@ Deno.test({
           const data = userNotificationsRepo.data.filter(
             (v) =>
               v.values.viewed === filter.options.viewed &&
-              v.values.userId === filter.options.userId
+              v.values.userId === filter.options.userId,
           );
           return Promise.resolve({
             values: {
@@ -61,7 +58,7 @@ Deno.test({
             },
             // deno-lint-ignore no-explicit-any
           } as any);
-        }
+        },
       );
 
       await it.step("Should return viewed resources", async () => {
@@ -107,7 +104,7 @@ Deno.test({
             path: TEST_BASE_PATH + "/:id",
             params: { id },
           }),
-          { type: "json", value: Promise.resolve(body) }
+          { type: "json", value: Promise.resolve(body) },
         );
 
       const userIdMock = crypto.randomUUID();

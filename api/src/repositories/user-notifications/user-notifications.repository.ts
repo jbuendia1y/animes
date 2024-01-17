@@ -1,10 +1,10 @@
 import type {
-  UserNotification,
-  UserNotificationsFilter,
   CreateUserNotification,
   DeleteUserNotification,
   Paginate,
   UpdateUserNotification,
+  UserNotification,
+  UserNotificationsFilter,
 } from "../../models/index.ts";
 
 export interface UserNotificationsRepository {

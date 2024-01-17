@@ -1,7 +1,7 @@
 import { CreateUser } from "../../../src/models/user/create-user.model.ts";
-import { User, IUser } from "../../../src/models/user/user.model.ts";
+import { IUser, User } from "../../../src/models/user/user.model.ts";
 import { UsersRepository } from "../../../src/repositories/users/users.repository.ts";
-import { UserMock, generateUserMock } from "../data/user.ts";
+import { generateUserMock, UserMock } from "../data/user.ts";
 
 export class UserRepositoryForAuthMock {
   findOne(_id: string) {
@@ -23,7 +23,7 @@ export class MockUsersRepository implements UsersRepository {
   }
   findOneByUsername(username: string): Promise<User | null> {
     return Promise.resolve(
-      this.data.find((v) => v.values.username === username) ?? null
+      this.data.find((v) => v.values.username === username) ?? null,
     );
   }
   save(data: CreateUser): Promise<void> {
@@ -35,7 +35,7 @@ export class MockUsersRepository implements UsersRepository {
         isAdmin: false,
         updatedAt: new Date(),
         ...data.values,
-      })
+      }),
     );
     return Promise.resolve();
   }

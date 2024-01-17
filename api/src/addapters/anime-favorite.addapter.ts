@@ -1,7 +1,7 @@
 import { AnimeFavorite, DBAnimeFavorite } from "../models/index.ts";
 
 export const createAnimeFavoriteAddapted = (
-  data: DBAnimeFavorite
+  data: DBAnimeFavorite,
 ): AnimeFavorite => {
   return new AnimeFavorite({
     id: data._id.toString(),

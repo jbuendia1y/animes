@@ -12,12 +12,13 @@ type GETResponseBody = { data: unknown[]; meta: { total: number } };
 const TEST_BASE_PATH = API_PREFIX_V1 + "/animes/history";
 
 const setup = (data: { mockUserId?: string | null } = {}) => {
-  const mockGetUserIdFromHeader =
-    data.mockUserId !== undefined
-      ? stub(AuthUtils, "getUserIdFromHeaders", () =>
-          Promise.resolve(data.mockUserId as string | null)
-        )
-      : undefined;
+  const mockGetUserIdFromHeader = data.mockUserId !== undefined
+    ? stub(
+      AuthUtils,
+      "getUserIdFromHeaders",
+      () => Promise.resolve(data.mockUserId as string | null),
+    )
+    : undefined;
 
   const userChapterHistoryRepo = new MockUserChapterHistoryRepository();
   const controller = new UserChapterHistoryController(userChapterHistoryRepo);
@@ -53,7 +54,7 @@ Deno.test({
         "find",
         ({ values: filter }) => {
           const data = userChapterHistoryRepo.data.filter(
-            (v) => v.values.userId === filter.options.userId
+            (v) => v.values.userId === filter.options.userId,
           );
 
           return Promise.resolve({
@@ -63,7 +64,7 @@ Deno.test({
             },
             // deno-lint-ignore no-explicit-any
           } as any);
-        }
+        },
       );
 
       const ctx = testing.createMockContext<"/">({
@@ -93,7 +94,7 @@ Deno.test({
           {
             type: "json",
             value: Promise.resolve(data.body),
-          }
+          },
         );
 
       await it.step("Should fail", async () => {

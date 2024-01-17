@@ -10,7 +10,7 @@ export const rateLimitMiddleware = (config: RateLimitConfig) => {
 
   return async (
     ctx: RouterContext<any, any, any>,
-    next: () => Promise<unknown>
+    next: () => Promise<unknown>,
   ) => {
     const ip = ctx.request.ip;
     const rateLimit = await store.get(ip);

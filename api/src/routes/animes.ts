@@ -17,12 +17,12 @@ router.get(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Param ${v.path.join(".")} ${v.message}`
+          (v) => `Param ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
   }),
-  controller.getAnimes.bind(controller)
+  controller.getAnimes.bind(controller),
 );
 
 router.get("/:id", controller.getOneAnime.bind(controller));
@@ -37,7 +37,7 @@ router.post(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
@@ -45,7 +45,7 @@ router.post(
       ctx.response.status = Status.Forbidden;
     }
   }),
-  controller.createAnime.bind(controller)
+  controller.createAnime.bind(controller),
 );
 
 router.patch(
@@ -58,10 +58,10 @@ router.patch(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
   }),
-  controller.updateAnime.bind(controller)
+  controller.updateAnime.bind(controller),
 );

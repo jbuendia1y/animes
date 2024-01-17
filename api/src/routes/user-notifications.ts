@@ -7,7 +7,7 @@ import { UserNotificationsController } from "../controllers/user-notifications.t
 import { container } from "npm:tsyringe";
 
 const controller = container.resolve<UserNotificationsController>(
-  UserNotificationsController.name
+  UserNotificationsController.name,
 );
 
 export const router = new Router({
@@ -23,12 +23,12 @@ router.patch(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
   }),
-  controller.updateUserNotification.bind(controller)
+  controller.updateUserNotification.bind(controller),
 );
 
 router.delete("/:id", controller.deleteUserNotification.bind(controller));

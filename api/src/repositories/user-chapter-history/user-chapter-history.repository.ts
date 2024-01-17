@@ -7,7 +7,7 @@ import type {
 
 export interface UserChapterHistoryRepository {
   find(
-    filter: UserChapterHistoryFilter
+    filter: UserChapterHistoryFilter,
   ): Promise<Paginate<UserChapterHistory[]>>;
 
   create(data: CreateUserChapterHistory): Promise<void>;

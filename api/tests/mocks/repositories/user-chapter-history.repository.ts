@@ -1,15 +1,14 @@
 import { Paginate } from "../../../src/models/paginate.ts";
 import { CreateUserChapterHistory } from "../../../src/models/user-chapter-history/create-user-chapter-history.model.ts";
 import {
-  UserChapterHistoryFilter,
   UserChapterHistory,
+  UserChapterHistoryFilter,
 } from "../../../src/models/user-chapter-history/user-chapter-history.model.ts";
 import { UserChapterHistoryRepository } from "../../../src/repositories/user-chapter-history/user-chapter-history.repository.ts";
 import { generateUserChapterHistoryMock } from "../data/user-chapter-history.ts";
 
 export class MockUserChapterHistoryRepository
-  implements UserChapterHistoryRepository
-{
+  implements UserChapterHistoryRepository {
   data: UserChapterHistory[] = [
     generateUserChapterHistoryMock(),
     generateUserChapterHistoryMock(),
@@ -20,13 +19,13 @@ export class MockUserChapterHistoryRepository
   ];
 
   find(
-    _filter: UserChapterHistoryFilter
+    _filter: UserChapterHistoryFilter,
   ): Promise<Paginate<UserChapterHistory[]>> {
     return Promise.resolve(
       new Paginate({
         data: this.data,
         meta: { total: this.data.length },
-      })
+      }),
     );
   }
   create(data: CreateUserChapterHistory): Promise<void> {
@@ -34,7 +33,7 @@ export class MockUserChapterHistoryRepository
       new UserChapterHistory({
         ...data.values,
         id: crypto.randomUUID(),
-      })
+      }),
     );
     return Promise.resolve();
   }

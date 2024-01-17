@@ -8,7 +8,7 @@ import { UserAnimesController } from "../controllers/index.ts";
 import { container } from "npm:tsyringe";
 
 const controller = container.resolve<UserAnimesController>(
-  UserAnimesController.name
+  UserAnimesController.name,
 );
 
 export const router = new Router({
@@ -24,7 +24,7 @@ router.post(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
@@ -32,7 +32,7 @@ router.post(
       ctx.response.status = Status.Forbidden;
     }
   }),
-  controller.createUserAnimes.bind(controller)
+  controller.createUserAnimes.bind(controller),
 );
 
 router.delete(
@@ -42,10 +42,10 @@ router.delete(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
   }),
-  controller.deleteUserAnimes.bind(controller)
+  controller.deleteUserAnimes.bind(controller),
 );

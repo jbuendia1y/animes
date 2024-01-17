@@ -1,11 +1,11 @@
 import { faker } from "npm:@faker-js/faker";
 import {
-  IAnimeFavorite,
   AnimeFavorite,
+  IAnimeFavorite,
 } from "../../../src/models/anime-favorite/index.ts";
 
 export const generateAnimeFavoriteMock = (
-  data: Partial<IAnimeFavorite> = {}
+  data: Partial<IAnimeFavorite> = {},
 ) => {
   return new AnimeFavorite({
     id: crypto.randomUUID(),

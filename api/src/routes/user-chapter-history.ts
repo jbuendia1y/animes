@@ -6,7 +6,7 @@ import { UserChapterHistoryController } from "../controllers/index.ts";
 import { container } from "npm:tsyringe";
 
 const controller = container.resolve<UserChapterHistoryController>(
-  UserChapterHistoryController.name
+  UserChapterHistoryController.name,
 );
 
 export const router = new Router({
@@ -22,12 +22,12 @@ router.post(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
   }),
-  controller.createUserChapterHistory.bind(controller)
+  controller.createUserChapterHistory.bind(controller),
 );
 
 router.delete("/:id", controller.deleteUserChapterHistory.bind(controller));

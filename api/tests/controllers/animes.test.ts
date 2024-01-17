@@ -67,7 +67,7 @@ Deno.test({
           mockRequestBody(ctx, {
             type: "json",
             value: Promise.resolve(mockCreateAnime),
-          })
+          }),
         );
         assertEquals(ctx.response.status, Status.Created);
         assertSpyCalls(spySaveMethod, 1);
@@ -77,15 +77,14 @@ Deno.test({
 
       await it.step("Get created anime", async () => {
         const ctx = testing.createMockContext<"/">({
-          path:
-            API_PREFIX_V1 +
+          path: API_PREFIX_V1 +
             "/animes" +
             "?" +
             new URLSearchParams({ slug: mockCreateAnime.slug }).toString(),
         });
 
         const anime = animesRepo.data.find(
-          (v) => v.values.slug === mockCreateAnime.slug
+          (v) => v.values.slug === mockCreateAnime.slug,
         );
 
         const mockFind = stub(animesRepo, "find", (_filter) => {

@@ -1,4 +1,4 @@
-import { Router, z, Status } from "../../deps.ts";
+import { Router, Status, z } from "../../deps.ts";
 import { authMiddleware } from "../middlewares/auth.middleware.ts";
 import { handleRouteErrors } from "../middlewares/handleRouteErrors.ts";
 import { ResourceAllReadyExistError } from "../errors/index.ts";
@@ -7,7 +7,7 @@ import { AnimeFavoritesController } from "../controllers/index.ts";
 import { container } from "npm:tsyringe";
 
 const controller = container.resolve<AnimeFavoritesController>(
-  AnimeFavoritesController.name
+  AnimeFavoritesController.name,
 );
 
 export const router = new Router({
@@ -23,7 +23,7 @@ router.post(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
@@ -31,7 +31,7 @@ router.post(
       ctx.response.status = Status.Forbidden;
     }
   }),
-  controller.createAnimeFavorite.bind(controller)
+  controller.createAnimeFavorite.bind(controller),
 );
 
 router.patch(
@@ -41,12 +41,12 @@ router.patch(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
   }),
-  controller.updateAnimeFavorite.bind(controller)
+  controller.updateAnimeFavorite.bind(controller),
 );
 
 router.delete(
@@ -56,10 +56,10 @@ router.delete(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
   }),
-  controller.deleteAnimeFavorite.bind(controller)
+  controller.deleteAnimeFavorite.bind(controller),
 );

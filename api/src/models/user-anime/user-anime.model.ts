@@ -38,11 +38,11 @@ const UserAnimeFilterSchema = z.object({
 });
 
 export class UserAnimeFilter {
-  private options: { userId?: string, animeId?:string };
+  private options: { userId?: string; animeId?: string };
   private page: { limit: number; offset: number };
 
   constructor(filters: {
-    options: { userId?: string,animeId?:string };
+    options: { userId?: string; animeId?: string };
     page: { limit: number; offset: number };
   }) {
     const parsed = UserAnimeFilterSchema.parse(filters);

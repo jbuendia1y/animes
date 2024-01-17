@@ -1,5 +1,5 @@
 import { inject, injectable } from "npm:tsyringe";
-import { Payload, RouterContext, Status, createJWT, z } from "../../deps.ts";
+import { createJWT, Payload, RouterContext, Status, z } from "../../deps.ts";
 import { JWT_ALG, JWT_KEY } from "../config/index.ts";
 import { CreateUser } from "../models/index.ts";
 import { UsersRepository } from "../repositories/users/users.repository.ts";
@@ -9,7 +9,7 @@ import { DI_TOKEN } from "../di.ts";
 @injectable()
 export class AuthController {
   constructor(
-    @inject(DI_TOKEN.USERS_REPO) private repository: UsersRepository
+    @inject(DI_TOKEN.USERS_REPO) private repository: UsersRepository,
   ) {}
 
   public async login(ctx: RouterContext<"/login">) {
@@ -30,7 +30,7 @@ export class AuthController {
 
     const equals = await AuthUtils.comparePasswords(
       parsed.password,
-      user.values.password
+      user.values.password,
     );
     if (!equals) {
       ctx.response.status = Status.BadRequest;

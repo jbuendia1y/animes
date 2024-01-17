@@ -42,8 +42,9 @@ export class TagFilter {
     options?: { slug?: string };
     page: { limit: number; offset: number };
   }) {
-    if (filters.page.limit > 300)
+    if (filters.page.limit > 300) {
       throw new Error("Put a limit no higher than 300 on the page filter");
+    }
     this.options = filters.options ?? {};
     this.page = filters.page;
   }
@@ -53,8 +54,9 @@ export class TagFilter {
     const options: { slug?: stringRegex } = {
       slug: this.options.slug,
     };
-    if (typeof options.slug === "string")
+    if (typeof options.slug === "string") {
       options.slug = { $regex: this.options.slug };
+    }
 
     return { options, page: this.page };
   }

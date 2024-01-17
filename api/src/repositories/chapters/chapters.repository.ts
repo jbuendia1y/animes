@@ -2,8 +2,8 @@ import type {
   Chapter,
   ChapterFilter,
   CreateChapter,
-  UpdateChapter,
   Paginate,
+  UpdateChapter,
 } from "../../models/index.ts";
 
 export interface ChaptersRepository {

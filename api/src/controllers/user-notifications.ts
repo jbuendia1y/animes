@@ -1,4 +1,4 @@
-import { RouterContext, Status, getQuery } from "../../deps.ts";
+import { getQuery, RouterContext, Status } from "../../deps.ts";
 import {
   DeleteUserNotification,
   UpdateUserNotification,
@@ -12,8 +12,8 @@ import { inject, injectable } from "npm:tsyringe";
 @injectable()
 export class UserNotificationsController {
   constructor(
-    @inject(DI_TOKEN.USER_NOTIFICATIONS_REPO)
-    private repository: UserNotificationsRepository
+    @inject(DI_TOKEN.USER_NOTIFICATIONS_REPO) private repository:
+      UserNotificationsRepository,
   ) {}
 
   public async getUserNotifications(ctx: RouterContext<"/">) {

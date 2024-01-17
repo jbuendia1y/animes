@@ -1,6 +1,6 @@
 import {
-  ChapterVideoFilter,
   ChapterVideo,
+  ChapterVideoFilter,
 } from "../../../src/models/chapter-video/chapter-video.model.ts";
 import { CreateChapterVideo } from "../../../src/models/chapter-video/create-chapter-video.model.ts";
 import { UpdateChapterVideo } from "../../../src/models/chapter-video/update-chapter-video.model.ts";
@@ -29,7 +29,7 @@ export class MockChapterVideosRepository implements ChapterVideosRepository {
       new ChapterVideo({
         ...data.values,
         id: crypto.randomUUID(),
-      })
+      }),
     );
     return Promise.resolve();
   }

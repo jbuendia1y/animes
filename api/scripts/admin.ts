@@ -13,8 +13,9 @@ const main = async () => {
   const username = prompt("username: ");
   const password = prompt("password: ");
 
-  if (!username || !password)
+  if (!username || !password) {
     throw new Error("username and password is required");
+  }
 
   const body = new CreateUser({ username, password });
 

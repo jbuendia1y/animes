@@ -62,7 +62,7 @@ export class MongoChapterVideosRepository implements ChapterVideosRepository {
   async update(id: string, data: UpdateChapterVideo) {
     await this.collection.updateOne(
       { _id: ObjectId.createFromHexString(id) },
-      { $set: { ...data.values } }
+      { $set: { ...data.values } },
     );
   }
 

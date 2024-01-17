@@ -1,4 +1,4 @@
-import type { CreateUser, User, IUser } from "../../models/index.ts";
+import type { CreateUser, IUser, User } from "../../models/index.ts";
 
 export interface UsersRepository {
   findOne(id: string): Promise<User | null>;

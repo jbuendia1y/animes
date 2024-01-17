@@ -1,9 +1,9 @@
-import { RouterContext, Status, getQuery } from "../../deps.ts";
+import { getQuery, RouterContext, Status } from "../../deps.ts";
 import {
   CreateAnimeFavoriteEvent,
   DeleteAnimeFavoriteEvent,
-  UpdateAnimeFavoriteEvent,
   emitAnimeFavoriteEvent,
+  UpdateAnimeFavoriteEvent,
 } from "../events/anime-favorite.event.ts";
 import {
   AnimeFavoriteFilter,
@@ -18,8 +18,8 @@ import { inject, injectable } from "npm:tsyringe";
 @injectable()
 export class AnimeFavoritesController {
   constructor(
-    @inject(DI_TOKEN.ANIMES_FAVORITES_REPO)
-    private repository: AnimeFavoritesRepository
+    @inject(DI_TOKEN.ANIMES_FAVORITES_REPO) private repository:
+      AnimeFavoritesRepository,
   ) {}
 
   public async getAnimeFavorites(ctx: RouterContext<"/">) {

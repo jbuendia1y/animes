@@ -133,8 +133,9 @@ export class AnimeFilter {
       status: this.options.status,
       "tags.slug": this.options.tags ? { $in: this.options.tags } : undefined,
     };
-    if (typeof options.slug === "string")
+    if (typeof options.slug === "string") {
       options.slug = { $regex: this.options.slug };
+    }
 
     return { options, page: this.page };
   }

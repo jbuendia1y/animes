@@ -15,17 +15,17 @@ import { inject, injectable } from "npm:tsyringe";
 
 @injectable()
 export class MongoUserNotificationsRepository
-  implements UserNotificationsRepository
-{
+  implements UserNotificationsRepository {
   private collection: MongoCollection<DBUserNotification>;
 
   constructor(@inject(DI_TOKEN.DATABASE) database: MongoDatabase) {
-    this.collection =
-      database.collection<DBUserNotification>("user-notifications");
+    this.collection = database.collection<DBUserNotification>(
+      "user-notifications",
+    );
   }
 
   async find(
-    filter: UserNotificationsFilter
+    filter: UserNotificationsFilter,
   ): Promise<Paginate<UserNotification[]>> {
     const docs = await this.collection.find(filter.values.options).toArray();
     const data = docs.map((doc) => createUserNotificationAddapted(doc));
@@ -46,7 +46,7 @@ export class MongoUserNotificationsRepository
       { _id: ObjectId.createFromHexString(id) },
       {
         $set: data.values,
-      }
+      },
     );
   }
 

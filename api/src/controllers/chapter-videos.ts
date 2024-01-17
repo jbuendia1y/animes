@@ -1,4 +1,4 @@
-import { RouterContext, Status, getQuery } from "../../deps.ts";
+import { getQuery, RouterContext, Status } from "../../deps.ts";
 import {
   ChapterVideoFilter,
   CreateChapterVideo,
@@ -11,8 +11,8 @@ import { inject, injectable } from "npm:tsyringe";
 @injectable()
 export class ChapterVideosController {
   constructor(
-    @inject(DI_TOKEN.CHAPTER_VIDEOS_REPO)
-    private repository: ChapterVideosRepository
+    @inject(DI_TOKEN.CHAPTER_VIDEOS_REPO) private repository:
+      ChapterVideosRepository,
   ) {}
 
   public async getChapterVideos(ctx: RouterContext<"/">) {

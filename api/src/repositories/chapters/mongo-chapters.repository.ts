@@ -67,7 +67,7 @@ export class MongoChaptersRepository implements ChaptersRepository {
   async update(id: string, data: UpdateChapter) {
     await this.collection.updateOne(
       { _id: ObjectId.createFromHexString(id) },
-      { $set: { ...data.values, updatedAt: new Date() } }
+      { $set: { ...data.values, updatedAt: new Date() } },
     );
   }
 }

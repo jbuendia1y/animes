@@ -2,16 +2,15 @@ import { Paginate } from "../../../src/models/paginate.ts";
 import { CreateUserNotification } from "../../../src/models/user-notification/create-user-notification.model.ts";
 import { UpdateUserNotification } from "../../../src/models/user-notification/update-user-notification.model.ts";
 import {
-  UserNotificationsFilter,
-  UserNotification,
   DeleteUserNotification,
+  UserNotification,
+  UserNotificationsFilter,
 } from "../../../src/models/user-notification/user-notification.model.ts";
 import { UserNotificationsRepository } from "../../../src/repositories/user-notifications/user-notifications.repository.ts";
 import { generateUserNoticiationMock } from "../data/user-notification.ts";
 
 export class MockUserNotificationsRepository
-  implements UserNotificationsRepository
-{
+  implements UserNotificationsRepository {
   data: UserNotification[] = [
     generateUserNoticiationMock(),
     generateUserNoticiationMock(),
@@ -22,13 +21,13 @@ export class MockUserNotificationsRepository
   ];
 
   find(
-    _filter: UserNotificationsFilter
+    _filter: UserNotificationsFilter,
   ): Promise<Paginate<UserNotification[]>> {
     return Promise.resolve(
       new Paginate({
         data: this.data,
         meta: { total: this.data.length },
-      })
+      }),
     );
   }
   save(data: CreateUserNotification): Promise<void> {
@@ -36,7 +35,7 @@ export class MockUserNotificationsRepository
       new UserNotification({
         ...data.values,
         id: crypto.randomUUID(),
-      })
+      }),
     );
     return Promise.resolve();
   }
@@ -53,7 +52,8 @@ export class MockUserNotificationsRepository
   delete(data: DeleteUserNotification): Promise<void> {
     const idx = this.data.findIndex(
       (v) =>
-        v.values.id === data.values.id && v.values.userId === data.values.userId
+        v.values.id === data.values.id &&
+        v.values.userId === data.values.userId,
     );
     this.data.splice(idx, 1);
     return Promise.resolve();

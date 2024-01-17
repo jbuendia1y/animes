@@ -1,4 +1,4 @@
-import { RouterContext, Status, getQuery } from "../../deps.ts";
+import { getQuery, RouterContext, Status } from "../../deps.ts";
 import {
   CreateUserChapterHistory,
   UserChapterHistoryFilter,
@@ -11,8 +11,8 @@ import { inject, injectable } from "npm:tsyringe";
 @injectable()
 export class UserChapterHistoryController {
   constructor(
-    @inject(DI_TOKEN.USER_CHAPTER_HISTORY_REPO)
-    private repository: UserChapterHistoryRepository
+    @inject(DI_TOKEN.USER_CHAPTER_HISTORY_REPO) private repository:
+      UserChapterHistoryRepository,
   ) {}
 
   public async getUserChapterHistory(ctx: RouterContext<"/">) {

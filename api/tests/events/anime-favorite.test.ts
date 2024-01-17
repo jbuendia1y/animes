@@ -1,9 +1,9 @@
 import {
   CreateAnimeFavoriteEvent,
   DeleteAnimeFavoriteEvent,
-  UpdateAnimeFavoriteEvent,
   emitAnimeFavoriteEvent,
   initAnimeFavoriteEvents,
+  UpdateAnimeFavoriteEvent,
 } from "../../src/events/anime-favorite.event.ts";
 import {
   CreateAnimeFavorite,

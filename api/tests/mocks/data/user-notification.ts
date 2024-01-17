@@ -5,7 +5,7 @@ import {
 } from "../../../src/models/user-notification/index.ts";
 
 export const generateUserNoticiationMock = (
-  data: Partial<IUserNotification> = {}
+  data: Partial<IUserNotification> = {},
 ) => {
   return new UserNotification({
     id: crypto.randomUUID(),

@@ -8,7 +8,7 @@ import { ChaptersController } from "../controllers/index.ts";
 import { container } from "npm:tsyringe";
 
 const controller = container.resolve<ChaptersController>(
-  ChaptersController.name
+  ChaptersController.name,
 );
 
 export const router = new Router({ prefix: API_PREFIX_V1 + "/chapters" });
@@ -24,7 +24,7 @@ router.get(
       }));
     }
   }),
-  controller.getChapters.bind(controller)
+  controller.getChapters.bind(controller),
 );
 
 router.get("/:id", controller.getOneChapter.bind(controller));
@@ -39,7 +39,7 @@ router.post(
         ctx.response.status = Status.BadRequest;
         ctx.response.body = {
           message: err.issues.map(
-            (v) => `Field ${v.path.join(".")} ${v.message}`
+            (v) => `Field ${v.path.join(".")} ${v.message}`,
           ),
         };
       }
@@ -49,7 +49,7 @@ router.post(
       }
     }
   },
-  controller.createChapter.bind(controller)
+  controller.createChapter.bind(controller),
 );
 
 router.patch(
@@ -62,10 +62,10 @@ router.patch(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
   }),
-  controller.updateChapter.bind(controller)
+  controller.updateChapter.bind(controller),
 );

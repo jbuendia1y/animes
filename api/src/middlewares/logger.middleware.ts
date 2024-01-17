@@ -1,10 +1,10 @@
 // deno-lint-ignore-file no-explicit-any
-import { State, Context, StdLogMod } from "../../deps.ts";
+import { Context, State, StdLogMod } from "../../deps.ts";
 
 export const requestLoggerMiddleware = () => {
   return (async (
     ctx: Context<State, Record<string, any>>,
-    next: () => Promise<void>
+    next: () => Promise<void>,
   ) => {
     const start = performance.now();
     await next();

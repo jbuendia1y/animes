@@ -21,16 +21,20 @@ const mockMiddlewareDeps = (
   }: {
     userIdMock: string | null;
     findOneMock: ReturnType<typeof generateUserMock> | null;
-  } = { userIdMock: null, findOneMock: null }
+  } = { userIdMock: null, findOneMock: null },
 ) => {
   const usersRepo = new MockUsersRepository();
   container.registerInstance(DI_TOKEN.USERS_REPO, usersRepo);
 
-  const findOneUserMock = stub(usersRepo, "findOne", () =>
-    Promise.resolve(findOneMock)
+  const findOneUserMock = stub(
+    usersRepo,
+    "findOne",
+    () => Promise.resolve(findOneMock),
   );
-  const userIdFromHeadersMock = stub(AuthUtils, "getUserIdFromHeaders", () =>
-    Promise.resolve(userIdMock)
+  const userIdFromHeadersMock = stub(
+    AuthUtils,
+    "getUserIdFromHeaders",
+    () => Promise.resolve(userIdMock),
   );
 
   return {
@@ -107,7 +111,7 @@ Deno.test({
         await authMiddleware()(ctx, next);
         assertEquals(ctx.response.status, Status.Unauthorized);
         restoreMocks();
-      }
+      },
     );
 
     await it.step(
@@ -122,7 +126,7 @@ Deno.test({
         await authMiddleware({ role: "isAdmin" })(ctx, next);
         assertEquals(ctx.response.status, Status.Unauthorized);
         restoreMocks();
-      }
+      },
     );
   },
 });

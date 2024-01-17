@@ -37,7 +37,7 @@ Deno.test({
         await controller.getChapterVideos(ctx);
         assertEquals(
           (ctx.response.body as MockGetAllBodyResponse).length,
-          chapterVideosRepo.data.length
+          chapterVideosRepo.data.length,
         );
         assertEquals(ctx.response.status, Status.OK);
       });
@@ -53,7 +53,7 @@ Deno.test({
 
         const mockFind = stub(chapterVideosRepo, "find", (filter) => {
           const data = chapterVideosRepo.data.filter(
-            ({ values: v }) => v.chapterId === filter.values.options.chapterId
+            ({ values: v }) => v.chapterId === filter.values.options.chapterId,
           );
           return Promise.resolve(data);
         });
@@ -64,7 +64,7 @@ Deno.test({
         assertEquals(ctx.response.status, Status.OK);
         assertEquals(
           (ctx.response.body as MockGetAllBodyResponse).length,
-          chapterVideosMock.length
+          chapterVideosMock.length,
         );
         mockFind.restore();
       });
@@ -83,7 +83,7 @@ Deno.test({
           {
             type: "json",
             value: Promise.resolve(data.body),
-          }
+          },
         );
       };
 
@@ -113,7 +113,7 @@ Deno.test({
           {
             type: "json",
             value: Promise.resolve(data.body),
-          }
+          },
         );
       };
 

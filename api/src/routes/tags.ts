@@ -1,4 +1,4 @@
-import { Router, z, Status } from "../../deps.ts";
+import { Router, Status, z } from "../../deps.ts";
 import { authMiddleware } from "../middlewares/auth.middleware.ts";
 import { handleRouteErrors } from "../middlewares/handleRouteErrors.ts";
 
@@ -23,7 +23,7 @@ router.post(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
@@ -31,5 +31,5 @@ router.post(
       ctx.response.status = Status.Forbidden;
     }
   }),
-  controller.createTag.bind(controller)
+  controller.createTag.bind(controller),
 );

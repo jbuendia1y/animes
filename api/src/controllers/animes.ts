@@ -1,4 +1,4 @@
-import { RouterContext, Status, getQuery, queryString } from "../../deps.ts";
+import { getQuery, queryString, RouterContext, Status } from "../../deps.ts";
 import { AnimeFilter, CreateAnime, UpdateAnime } from "../models/index.ts";
 import { AnimesRepository } from "../repositories/animes/animes.repository.ts";
 import { DI_TOKEN } from "../di.ts";
@@ -7,7 +7,7 @@ import { inject, injectable } from "npm:tsyringe";
 @injectable()
 export class AnimesContoller {
   constructor(
-    @inject(DI_TOKEN.ANIMES_REPO) private repository: AnimesRepository
+    @inject(DI_TOKEN.ANIMES_REPO) private repository: AnimesRepository,
   ) {}
 
   public async getAnimes(ctx: RouterContext<"/">) {
@@ -16,17 +16,18 @@ export class AnimesContoller {
       new URLSearchParams(query).toString(),
       {
         arrayFormat: "index",
-      }
+      },
     );
 
     let options = {};
     if (query.slug) options = { ...options, slug: query.slug };
     if (query.status) options = { ...options, status: query.status };
-    if (formattedQuery["tags"])
+    if (formattedQuery["tags"]) {
       options = {
         ...options,
         tags: formattedQuery["tags"],
       };
+    }
 
     const filter = new AnimeFilter({
       options,

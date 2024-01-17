@@ -1,7 +1,7 @@
 import { DBUserNotification, UserNotification } from "../models/index.ts";
 
 export const createUserNotificationAddapted = (
-  data: DBUserNotification
+  data: DBUserNotification,
 ): UserNotification => {
   return new UserNotification({
     id: data._id.toString(),

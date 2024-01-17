@@ -20,12 +20,12 @@ router.post(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
   }),
-  controller.login.bind(controller)
+  controller.login.bind(controller),
 );
 
 router.post(
@@ -35,7 +35,7 @@ router.post(
       ctx.response.status = Status.BadRequest;
       ctx.response.body = {
         message: err.issues.map(
-          (v) => `Field ${v.path.join(".")} ${v.message}`
+          (v) => `Field ${v.path.join(".")} ${v.message}`,
         ),
       };
     }
@@ -44,7 +44,7 @@ router.post(
       ctx.response.body = { message: "This username is already taken" };
     }
   }),
-  controller.register.bind(controller)
+  controller.register.bind(controller),
 );
 
 router.get("/profile", authMiddleware(), controller.profile.bind(controller));

@@ -1,5 +1,5 @@
 import { container } from "npm:tsyringe";
-import { Context, Payload, bcrypt, verifyJWT } from "../../deps.ts";
+import { bcrypt, Context, Payload, verifyJWT } from "../../deps.ts";
 import { JWT_KEY } from "../config/index.ts";
 import { DI_TOKEN } from "../di.ts";
 
@@ -8,7 +8,6 @@ import type { UsersRepository } from "../repositories/users/users.repository.ts"
 
 export class AuthUtils {
   /**
-   *
    * @param user
    * @returns User to return into the response.body without password
    */
@@ -27,7 +26,7 @@ export class AuthUtils {
 
     const code = authorization.split(" ")[1];
     const payload = await verifyJWT(code, JWT_KEY).catch(
-      () => ({ sub: undefined } as Payload)
+      () => ({ sub: undefined } as Payload),
     );
     const userId = payload.sub;
 
@@ -40,7 +39,7 @@ export class AuthUtils {
 
   static async getUserFromHeaders(ctx: Context) {
     const userRepository = container.resolve<UsersRepository>(
-      DI_TOKEN.USERS_REPO
+      DI_TOKEN.USERS_REPO,
     );
     const userId = await this.getUserIdFromHeaders(ctx);
 
@@ -56,7 +55,6 @@ export class AuthUtils {
   }
 
   /**
-   *
    * @param input plain password
    * @param original database password
    */
@@ -65,7 +63,6 @@ export class AuthUtils {
   }
 
   /**
-   *
    * @param password plain password
    * @returns hash
    */

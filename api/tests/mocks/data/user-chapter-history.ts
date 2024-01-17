@@ -5,7 +5,7 @@ import {
 } from "../../../src/models/user-chapter-history/index.ts";
 
 export const generateUserChapterHistoryMock = (
-  data: Partial<IUserChapterHistory> = {}
+  data: Partial<IUserChapterHistory> = {},
 ) => {
   return new UserChapterHistory({
     id: crypto.randomUUID(),

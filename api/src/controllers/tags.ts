@@ -1,4 +1,4 @@
-import { RouterContext, Status, getQuery } from "../../deps.ts";
+import { getQuery, RouterContext, Status } from "../../deps.ts";
 import { CreateTag, TagFilter } from "../models/index.ts";
 import { TagsRepository } from "../repositories/tags/tags.repository.ts";
 import { DI_TOKEN } from "../di.ts";

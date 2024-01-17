@@ -1,4 +1,4 @@
-import { RouterContext, Status, getQuery } from "../../deps.ts";
+import { getQuery, RouterContext, Status } from "../../deps.ts";
 import {
   CreateUserAnime,
   DeleteUserAnime,
@@ -12,7 +12,7 @@ import { inject, injectable } from "npm:tsyringe";
 @injectable()
 export class UserAnimesController {
   constructor(
-    @inject(DI_TOKEN.USER_ANIMES_REPO) private repository: UserAnimesRepository
+    @inject(DI_TOKEN.USER_ANIMES_REPO) private repository: UserAnimesRepository,
   ) {}
 
   public async getUserAnimes(ctx: RouterContext<"/">) {

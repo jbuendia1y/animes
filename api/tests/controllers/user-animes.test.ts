@@ -20,8 +20,10 @@ Deno.test({
   name: "User animes routes",
   async fn(it) {
     let userIdMock = crypto.randomUUID();
-    const mockAuthHeader = stub(AuthUtils, "getUserIdFromHeaders", () =>
-      Promise.resolve(userIdMock)
+    const mockAuthHeader = stub(
+      AuthUtils,
+      "getUserIdFromHeaders",
+      () => Promise.resolve(userIdMock),
     );
 
     await it.step("Get user animes", async () => {
@@ -36,7 +38,7 @@ Deno.test({
 
       const findMock = stub(userAnimesRepo, "find", ({ values: filter }) => {
         const data = userAnimesRepo.data.filter(
-          (v) => v.values.userId === filter.options.userId
+          (v) => v.values.userId === filter.options.userId,
         );
         return Promise.resolve({
           values: {
@@ -74,7 +76,7 @@ Deno.test({
           {
             type: "json",
             value: Promise.resolve(body),
-          }
+          },
         );
       };
 

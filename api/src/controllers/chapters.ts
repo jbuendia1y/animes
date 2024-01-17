@@ -1,4 +1,4 @@
-import { RouterContext, Status, getQuery, z } from "../../deps.ts";
+import { getQuery, RouterContext, Status, z } from "../../deps.ts";
 import {
   CreateChapterEvent,
   emitChapterEvent,
@@ -15,7 +15,7 @@ import { inject, injectable } from "npm:tsyringe";
 @injectable()
 export class ChaptersController {
   constructor(
-    @inject(DI_TOKEN.CHAPTERS_REPO) private repository: ChaptersRepository
+    @inject(DI_TOKEN.CHAPTERS_REPO) private repository: ChaptersRepository,
   ) {}
 
   public async getChapters(ctx: RouterContext<"/">) {

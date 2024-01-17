@@ -28,7 +28,7 @@ export class MockAnimesRepository implements AnimesRepository {
       new Paginate({
         data: this.data,
         meta: { total: this.data.length },
-      })
+      }),
     );
   }
   findOne(id: string) {
@@ -42,7 +42,7 @@ export class MockAnimesRepository implements AnimesRepository {
         id: crypto.randomUUID(),
         createdAt: new Date(),
         updatedAt: new Date(),
-      })
+      }),
     );
     return Promise.resolve();
   }
@@ -51,10 +51,12 @@ export class MockAnimesRepository implements AnimesRepository {
     const { stars, ...values } = data.values;
 
     const starsUpdated = { ...this.data[idx].values.stars };
-    if (stars?.type === "increment")
+    if (stars?.type === "increment") {
       starsUpdated[stars.star] = starsUpdated[stars.star] + 1;
-    if (stars?.type === "decrement")
+    }
+    if (stars?.type === "decrement") {
       starsUpdated[stars.star] = starsUpdated[stars.star] - 1;
+    }
 
     this.data[idx] = new Anime({
       ...this.data[idx].values,

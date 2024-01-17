@@ -41,8 +41,8 @@ Deno.test({
       const animeId = crypto.randomUUID();
 
       const ctx = testing.createMockContext<"/">({
-        path:
-          TEST_BASE_PATH + "?" + new URLSearchParams({ animeId }).toString(),
+        path: TEST_BASE_PATH + "?" +
+          new URLSearchParams({ animeId }).toString(),
       });
 
       const mockChapters = [
@@ -57,7 +57,7 @@ Deno.test({
 
       const mockFind = stub(chaptersRepo, "find", function (filter) {
         const data = this.data.filter(
-          (v) => v.values.animeId === filter.values.options.animeId
+          (v) => v.values.animeId === filter.values.options.animeId,
         );
         return Promise.resolve({
           values: {
@@ -119,7 +119,7 @@ Deno.test({
           {
             type: "json",
             value: Promise.resolve(data.body),
-          }
+          },
         );
       };
 

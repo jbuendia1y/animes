@@ -12,14 +12,13 @@ export const JWT_KEY = await crypto.subtle.importKey(
   encoder.encode(Deno.env.get("JWT_SECRET") ?? env["JWT_SECRET"]),
   { name: "HMAC", hash: "SHA-512" },
   true,
-  ["sign", "verify"]
+  ["sign", "verify"],
 );
 
 const MONGO_URI = Deno.env.get("MONGO_URI") ?? env["MONGO_URI"];
 export const config = {
-  MONGO_URI:
-    DENO_ENV == "test"
-      ? (MONGO_URI.endsWith("/") ? MONGO_URI : MONGO_URI + "/") + "app_testing"
-      : MONGO_URI,
+  MONGO_URI: DENO_ENV == "test"
+    ? (MONGO_URI.endsWith("/") ? MONGO_URI : MONGO_URI + "/") + "app_testing"
+    : MONGO_URI,
   PORT: Deno.env.get("PORT") ?? env["PORT"],
 };

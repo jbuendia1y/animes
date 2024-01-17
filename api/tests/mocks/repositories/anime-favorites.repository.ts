@@ -1,6 +1,6 @@
 import {
-  AnimeFavoriteFilter,
   AnimeFavorite,
+  AnimeFavoriteFilter,
 } from "../../../src/models/anime-favorite/anime-favorite.model.ts";
 import { CreateAnimeFavorite } from "../../../src/models/anime-favorite/create-anime-favorite.model.ts";
 import { UpdateAnimeFavorite } from "../../../src/models/anime-favorite/update-anime-favorite.model.ts";
@@ -23,7 +23,7 @@ export class MockAnimeFavoritesRepository implements AnimeFavoritesRepository {
       new Paginate({
         data: this.data,
         meta: { total: this.data.length },
-      })
+      }),
     );
   }
   findOne(id: string): Promise<AnimeFavorite | null> {
@@ -45,7 +45,7 @@ export class MockAnimeFavoritesRepository implements AnimeFavoritesRepository {
       new AnimeFavorite({
         ...data.values,
         id: crypto.randomUUID(),
-      })
+      }),
     );
     return Promise.resolve();
   }

@@ -1,6 +1,6 @@
 import {
-  ChapterFilter,
   Chapter,
+  ChapterFilter,
 } from "../../../src/models/chapter/chapter.model.ts";
 import { CreateChapter } from "../../../src/models/chapter/create-chapter.model.ts";
 import { UpdateChapter } from "../../../src/models/chapter/update-chapter.model.ts";
@@ -21,7 +21,7 @@ export class MockChaptersRepository implements ChaptersRepository {
       new Paginate({
         data: this.data,
         meta: { total: this.data.length },
-      })
+      }),
     );
   }
 
@@ -37,7 +37,7 @@ export class MockChaptersRepository implements ChaptersRepository {
         id: crypto.randomUUID(),
         updatedAt: new Date(),
         createdAt: new Date(),
-      })
+      }),
     );
     return Promise.resolve();
   }

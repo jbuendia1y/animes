@@ -23,8 +23,10 @@ Deno.test({
     const { animeFavoritesRepo, controller } = setup();
     const commonUser = generateUserMock();
     let userIdMock = commonUser.values.id;
-    const mockHeadersId = stub(AuthUtils, "getUserIdFromHeaders", () =>
-      Promise.resolve(userIdMock)
+    const mockHeadersId = stub(
+      AuthUtils,
+      "getUserIdFromHeaders",
+      () => Promise.resolve(userIdMock),
     );
 
     await it.step("Find anime favorites", async (it) => {
@@ -35,7 +37,7 @@ Deno.test({
 
       const mockFind = stub(animeFavoritesRepo, "find", function () {
         const data = this.data.filter(
-          (v) => v.values.userId === commonUser.values.id
+          (v) => v.values.userId === commonUser.values.id,
         );
         return Promise.resolve({
           values: {
@@ -60,7 +62,7 @@ Deno.test({
         animeFavoritesRepo.data.push(
           generateAnimeFavoriteMock({ userId: commonUser.values.id }),
           generateAnimeFavoriteMock({ userId: commonUser.values.id }),
-          generateAnimeFavoriteMock({ userId: commonUser.values.id })
+          generateAnimeFavoriteMock({ userId: commonUser.values.id }),
         );
 
         await controller.getAnimeFavorites(ctx);
@@ -89,7 +91,7 @@ Deno.test({
           {
             type: "json",
             value: Promise.resolve(mockCreateAnimeBody),
-          }
+          },
         );
         await assertRejects(() => controller.createAnimeFavorite(ctx));
       });
@@ -106,7 +108,7 @@ Deno.test({
           {
             type: "json",
             value: Promise.resolve(mockCreateAnimeBody),
-          }
+          },
         );
         await controller.createAnimeFavorite(ctx);
         assertEquals(ctx.response.status, Status.Created);
@@ -129,7 +131,7 @@ Deno.test({
           {
             type: "json",
             value: Promise.resolve(data.body),
-          }
+          },
         );
       };
 
@@ -155,7 +157,7 @@ Deno.test({
           });
           await controller.updateAnimeFavorite(ctx);
           assertEquals(ctx.response.status, Status.Unauthorized);
-        }
+        },
       );
       await it.step("Should success", async () => {
         const favoriteMock = generateAnimeFavoriteMock({

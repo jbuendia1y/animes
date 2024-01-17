@@ -17,7 +17,7 @@ export const chaptersEvents: {
 
 export const subscribeChapterEvent = (
   event: IChapterEvents,
-  obs: (payload: unknown) => Promise<void>
+  obs: (payload: unknown) => Promise<void>,
 ) => {
   if (!chaptersEvents[event]) chaptersEvents[event] = [];
   chaptersEvents[event].push(obs);
@@ -25,7 +25,7 @@ export const subscribeChapterEvent = (
 
 export const emitChapterEvent = async (
   event: IChapterEvents,
-  payload: unknown
+  payload: unknown,
 ) => {
   if (!chaptersEvents[event]) return;
   for (const obs of chaptersEvents[event]) {
@@ -36,7 +36,7 @@ export const emitChapterEvent = async (
 export const initChapterEvents = (
   db: MongoDatabase,
   userNotificationsRepo: UserNotificationsRepository,
-  animesRepo: AnimesRepository
+  animesRepo: AnimesRepository,
 ) => {
   subscribeChapterEvent(CreateChapterEvent, async (payload: unknown) => {
     if (payload instanceof CreateChapter) {

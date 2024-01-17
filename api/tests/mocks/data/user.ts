@@ -12,7 +12,7 @@ export const UserMock = new User({
 });
 
 export const generateUserMock = (
-  data: { isAdmin: boolean } = { isAdmin: false }
+  data: { isAdmin: boolean } = { isAdmin: false },
 ) => {
   const createdAt = faker.date.past({ years: 2 });
 

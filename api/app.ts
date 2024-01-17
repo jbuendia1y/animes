@@ -1,8 +1,8 @@
 import "npm:reflect-metadata";
 import { container } from "npm:tsyringe";
 
-import { Application, MongoClient, joinPath, oakCors } from "./deps.ts";
-import { DENO_ENV, config } from "./src/config/index.ts";
+import { Application, joinPath, MongoClient, oakCors } from "./deps.ts";
+import { config, DENO_ENV } from "./src/config/index.ts";
 import { API_PREFIX_V1 } from "./src/constants.ts";
 import { initAnimeFavoriteEvents } from "./src/events/anime-favorite.event.ts";
 import { initChapterEvents } from "./src/events/chapters.event.ts";
@@ -47,13 +47,13 @@ container.register<UserNotificationsRepository>(
   DI_TOKEN.USER_NOTIFICATIONS_REPO,
   {
     useClass: MongoUserNotificationsRepository,
-  }
+  },
 );
 container.register<UserChapterHistoryRepository>(
   DI_TOKEN.USER_CHAPTER_HISTORY_REPO,
   {
     useClass: MongoUserChapterHistoryRepository,
-  }
+  },
 );
 container.register<ChapterVideosRepository>(DI_TOKEN.CHAPTER_VIDEOS_REPO, {
   useClass: MongoChapterVideosRepository,
@@ -143,7 +143,7 @@ initAnimeFavoriteEvents(container.resolve(DI_TOKEN.DATABASE));
 initChapterEvents(
   container.resolve(DI_TOKEN.DATABASE),
   container.resolve(DI_TOKEN.USER_NOTIFICATIONS_REPO),
-  container.resolve(DI_TOKEN.ANIMES_REPO)
+  container.resolve(DI_TOKEN.ANIMES_REPO),
 );
 console.log("--- APP EVENTS STARTED ---");
 console.log("------------------------------");

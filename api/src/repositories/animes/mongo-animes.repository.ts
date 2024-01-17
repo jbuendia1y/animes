@@ -4,12 +4,12 @@ import { createAnimeAddapted } from "../../addapters/anime.addapter.ts";
 import { ResourceAllReadyExistError } from "../../errors/index.ts";
 import {
   Anime,
-  CreateAnime,
-  UpdateAnime,
-  AnimeList,
   AnimeFilter,
-  Paginate,
+  AnimeList,
+  CreateAnime,
   DBAnime,
+  Paginate,
+  UpdateAnime,
 } from "../../models/index.ts";
 import type { AnimesRepository } from "./animes.repository.ts";
 import { DI_TOKEN } from "../../di.ts";
@@ -61,17 +61,19 @@ export class MongoAnimesRepository implements AnimesRepository {
     const { stars, ...values } = data.values;
 
     let incOrDec = {};
-    if (stars?.type === "increment")
+    if (stars?.type === "increment") {
       incOrDec = { $inc: { [`stars.${stars.star}`]: 1 } };
-    if (stars?.type === "decrement")
+    }
+    if (stars?.type === "decrement") {
       incOrDec = { $inc: { [`stars.${stars.star}`]: -1 } };
+    }
 
     await this.collection.updateOne(
       { _id: ObjectId.createFromHexString(id) },
       {
         $set: { ...values, updatedAt: new Date() },
         ...incOrDec,
-      }
+      },
     );
   }
 }

@@ -51,7 +51,7 @@ export class MongoAnimeFavoritesRepository implements AnimeFavoritesRepository {
       {
         _id: ObjectId.createFromHexString(id),
       },
-      { $set: data.values }
+      { $set: data.values },
     );
   }
 

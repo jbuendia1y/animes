@@ -2,7 +2,7 @@ import { ChapterVideo } from "../models/chapter-video/chapter-video.model.ts";
 import { DBChapterVideo } from "../models/chapter-video/db-chapter-video.model.ts";
 
 export const createChapterVideoAddapted = (
-  data: DBChapterVideo
+  data: DBChapterVideo,
 ): ChapterVideo => {
   return new ChapterVideo({
     id: data._id.toString(),

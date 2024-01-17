@@ -52,7 +52,7 @@ export class MongoUsersRepository implements UsersRepository {
           ...data,
           updatedAt: new Date(),
         },
-      }
+      },
     );
   }
 }
