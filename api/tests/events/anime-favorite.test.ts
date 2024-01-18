@@ -56,7 +56,7 @@ Deno.test({
 
     await it.step("Update event", async () => {
       const { favoriteMock } = setup();
-      const updateStarsMock = favoriteMock.values.stars + 1;
+      const updateStarsMock = generateAnimeFavoriteMock().values.stars;
       const toUpdate = new UpdateAnimeFavorite({
         stars: updateStarsMock,
       });
