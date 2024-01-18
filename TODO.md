@@ -2,7 +2,7 @@
 
 ## API
 
-- [ ] Crear un middleware que haga un log para cada petición y guardar los logs en un archivo o base de datos
+- [x] Crear un middleware que haga un log para cada petición y guardar los logs en un archivo o base de datos
 - [x] Crear un límite de intentos de login
 - [x] Añadir Dependency Injection
 - [x] Añadir Unit Testing
