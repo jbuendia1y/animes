@@ -21,7 +21,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AnimesService } from "../../../services/animes.service";
 import { TagsField } from "../../TagsField";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Tag } from "../../../models/tag.model";
 
 interface Props {
@@ -39,16 +39,31 @@ const setEmptyOrStr = (v: unknown) => {
   else return v;
 };
 
+const sleep = (time: number) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, time);
+  });
+};
+
 export function NewAnimeModal({ open, onClose }: Props) {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful },
+    reset,
     setError,
   } = useForm<Form>();
   const tags = useRef<Tag[]>([]);
 
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      onClose();
+      reset();
+    }
+  }, [isSubmitSuccessful, onClose, reset]);
+
   const onSubmit = async (data: Form) => {
+    await sleep(2_000);
     let toCreate: CreateAnime | undefined = undefined;
     try {
       toCreate = new CreateAnime({
