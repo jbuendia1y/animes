@@ -49,7 +49,7 @@ export function NewAnimeModal({ open, onClose }: Props) {
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors, isSubmitSuccessful, isSubmitting },
     reset,
     setError,
   } = useForm<Form>();
@@ -63,6 +63,7 @@ export function NewAnimeModal({ open, onClose }: Props) {
   }, [isSubmitSuccessful, onClose, reset]);
 
   const onSubmit = async (data: Form) => {
+    if (isSubmitting) return;
     await sleep(2_000);
     let toCreate: CreateAnime | undefined = undefined;
     try {
@@ -239,7 +240,7 @@ export function NewAnimeModal({ open, onClose }: Props) {
             helperText={errors.showType?.message}
             {...register("showType", { required: true })}
           />
-          <Button variant="contained" type="submit">
+          <Button variant="contained" type="submit" disabled={isSubmitting}>
             Guardar
           </Button>
         </Stack>
