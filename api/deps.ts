@@ -1,6 +1,3 @@
-// Logging
-export * as StdLogMod from "https://deno.land/std@0.210.0/log/mod.ts";
-
 // MongoDB
 export { ObjectId } from "https://deno.land/x/web_bson@v0.3.0/mod.js";
 export type { Document } from "https://deno.land/x/web_bson@v0.3.0/mod.js";

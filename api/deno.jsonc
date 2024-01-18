@@ -1,8 +1,8 @@
 {
   "tasks": {
-    "start": "DENO_ENV=production deno run --allow-net --allow-env --allow-read --allow-write main.ts",
-    "dev": "deno run --watch --allow-net --allow-env --allow-read --allow-write main.ts",
-    "test": "DENO_ENV=test deno test --allow-net --allow-env --allow-read",
-    "script:admin": "deno run scripts/admin.ts"
+    "start": "DENO_ENV=production deno run -A main.ts",
+    "dev": "deno run --watch -A main.ts",
+    "test": "DENO_ENV=test deno test -A",
+    "script:admin": "deno run -A scripts/admin.ts"
   }
 }
