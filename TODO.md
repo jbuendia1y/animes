@@ -10,5 +10,5 @@
 ## Frontend
 
 - [X] Añadir un límite de peticiones para el formulario de Inicio de Sessión
-- [ ] Cerrar el formulario para crear animes cuando se complete la petición POST
+- [X] Cerrar el formulario para crear animes cuando se complete la petición POST
 - [ ] Añadir un estado de carga al formulario para crear animes cuando se envíe
