@@ -1,6 +1,5 @@
 export interface IChapterVideo {
   id: string;
-  provider: string | null;
   player: string;
 
   videoURL: string;
@@ -11,7 +10,6 @@ export interface IChapterVideo {
 
 export class ChapterVideo {
   private id: string;
-  private provider: string | null;
   private player: string;
 
   private videoURL: string;
@@ -21,7 +19,6 @@ export class ChapterVideo {
 
   constructor(data: IChapterVideo) {
     this.id = data.id;
-    this.provider = data.provider;
     this.player = data.player;
     this.videoURL = data.videoURL;
     this.embedURL = data.embedURL;
@@ -31,7 +28,6 @@ export class ChapterVideo {
   get values(): IChapterVideo {
     return {
       id: this.id,
-      provider: this.provider,
       player: this.player,
       videoURL: this.videoURL,
       embedURL: this.embedURL,

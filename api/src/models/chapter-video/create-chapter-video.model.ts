@@ -1,7 +1,6 @@
 import { z } from "../../../deps.ts";
 
 interface ICreateChapterVideo {
-  provider: string | null;
   player: string;
 
   videoURL: string;
@@ -11,7 +10,6 @@ interface ICreateChapterVideo {
 }
 
 const CreateChapterVideoSchema = z.object({
-  provider: z.string().nullable(),
   player: z.string(),
   videoURL: z.string(),
   embedURL: z.string(),
@@ -19,7 +17,6 @@ const CreateChapterVideoSchema = z.object({
 });
 
 export class CreateChapterVideo {
-  private provider: string | null;
   private player: string;
   private videoURL: string;
   private embedURL: string;
@@ -28,7 +25,6 @@ export class CreateChapterVideo {
   constructor(data: ICreateChapterVideo) {
     const parsed = CreateChapterVideoSchema.parse(data);
 
-    this.provider = parsed.provider;
     this.player = parsed.player;
     this.videoURL = parsed.videoURL;
     this.embedURL = parsed.embedURL;
@@ -37,7 +33,6 @@ export class CreateChapterVideo {
 
   get values(): ICreateChapterVideo {
     return {
-      provider: this.provider,
       player: this.player,
       videoURL: this.videoURL,
       embedURL: this.embedURL,

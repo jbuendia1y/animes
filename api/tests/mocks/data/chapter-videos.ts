@@ -10,7 +10,6 @@ export const generateChapterVideoMock = (data: Partial<IChapterVideo> = {}) => {
     chapterId: crypto.randomUUID(),
     embedURL: faker.internet.url({ appendSlash: false }),
     player: faker.company.name(),
-    provider: faker.company.name(),
     videoURL: faker.internet.url({ appendSlash: false }),
     ...data,
   });
