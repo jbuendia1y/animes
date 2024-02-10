@@ -1,4 +1,9 @@
-import { MongoCollection, MongoDatabase, ObjectId } from "../../../deps.ts";
+import {
+  Collection as MongoCollection,
+  Database as MongoDatabase,
+  ObjectId,
+} from "mongodb";
+
 import { createUserAnimeAddapted } from "../../addapters/user-anime.addapter.ts";
 import { ResourceAllReadyExistError } from "../../errors/index.ts";
 import { Paginate } from "../../models/index.ts";
@@ -11,7 +16,7 @@ import {
 } from "../../models/user-anime/index.ts";
 import { UserAnimesRepository } from "./user-anime.repository.ts";
 import { DI_TOKEN } from "../../di.ts";
-import { inject, injectable } from "npm:tsyringe";
+import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class MongoUserAnimesRepository implements UserAnimesRepository {
@@ -61,3 +66,8 @@ export class MongoUserAnimesRepository implements UserAnimesRepository {
     });
   }
 }
+
+export const DI_REPO = {
+  TOKEN: DI_TOKEN.USER_ANIMES_REPO,
+  VALUE: MongoUserAnimesRepository,
+};

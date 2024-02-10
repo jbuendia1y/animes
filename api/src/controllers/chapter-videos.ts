@@ -1,12 +1,14 @@
-import { getQuery, RouterContext, Status } from "../../deps.ts";
+import { Status } from "../../deps.ts";
+import { getQuery } from "$oak/helpers.ts";
+import { RouterContext } from "$oak/mod.ts";
 import {
   ChapterVideoFilter,
   CreateChapterVideo,
   UpdateChapterVideo,
 } from "../models/index.ts";
-import { ChapterVideosRepository } from "../repositories/chapter-videos/chapter-videos.repository.ts";
+import type { ChapterVideosRepository } from "../repositories/chapter-videos/chapter-videos.repository.ts";
 import { DI_TOKEN } from "../di.ts";
-import { inject, injectable } from "npm:tsyringe";
+import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class ChapterVideosController {

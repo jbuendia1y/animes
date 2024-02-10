@@ -1,5 +1,10 @@
-import { inject, injectable } from "npm:tsyringe";
-import { MongoCollection, MongoDatabase, ObjectId } from "../../../deps.ts";
+import { inject, injectable } from "tsyringe";
+import {
+  Collection as MongoCollection,
+  Database as MongoDatabase,
+  ObjectId,
+} from "mongodb";
+
 import { createAnimeFavoriteAddapted } from "../../addapters/anime-favorite.addapter.ts";
 import { ResourceAllReadyExistError } from "../../errors/index.ts";
 import {
@@ -72,3 +77,8 @@ export class MongoAnimeFavoritesRepository implements AnimeFavoritesRepository {
     await this.collection.deleteOne({ _id: ObjectId.createFromHexString(id) });
   }
 }
+
+export const DI_REPO = {
+  TOKEN: DI_TOKEN.ANIMES_FAVORITES_REPO,
+  VALUE: MongoAnimeFavoritesRepository,
+};

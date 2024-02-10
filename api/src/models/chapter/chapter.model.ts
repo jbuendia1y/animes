@@ -1,4 +1,5 @@
-import { z } from "../../../deps.ts";
+import { z } from "zod";
+
 import { ITitles } from "../anime/index.ts";
 
 export interface IChapter {

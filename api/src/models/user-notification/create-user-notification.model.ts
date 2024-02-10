@@ -1,4 +1,4 @@
-import { z } from "../../../deps.ts";
+import { z } from "zod";
 
 const CreateUserNotificationSchema = z.object({
   title: z.string(),

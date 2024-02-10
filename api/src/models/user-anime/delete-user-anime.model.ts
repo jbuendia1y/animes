@@ -1,4 +1,4 @@
-import { z } from "../../../deps.ts";
+import { z } from "zod";
 
 const DeleteUserAnimeSchema = z.object({
   id: z.string().min(1),

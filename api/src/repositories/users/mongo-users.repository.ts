@@ -1,10 +1,15 @@
-import { MongoCollection, MongoDatabase, ObjectId } from "../../../deps.ts";
+import {
+  Collection as MongoCollection,
+  Database as MongoDatabase,
+  ObjectId,
+} from "mongodb";
+
 import { createUserAddapted } from "../../addapters/user.addapter.ts";
 import { ResourceAllReadyExistError } from "../../errors/index.ts";
 import { CreateUser, DBUser, IUser, User } from "../../models/index.ts";
 import { UsersRepository } from "./users.repository.ts";
 import { DI_TOKEN } from "../../di.ts";
-import { inject, injectable } from "npm:tsyringe";
+import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class MongoUsersRepository implements UsersRepository {
@@ -56,3 +61,8 @@ export class MongoUsersRepository implements UsersRepository {
     );
   }
 }
+
+export const DI_REPO = {
+  TOKEN: DI_TOKEN.USERS_REPO,
+  VALUE: MongoUsersRepository,
+};

@@ -1,8 +1,8 @@
-import { loadEnvs } from "../../deps.ts";
+import { load } from "$dotenv/mod.ts";
 
 export const DENO_ENV = Deno.env.get("DENO_ENV");
 
-const env = await loadEnvs();
+const env = await load();
 const encoder = new TextEncoder();
 
 // HS512 (HMAC SHA-512)

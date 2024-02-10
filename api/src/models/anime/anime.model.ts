@@ -1,4 +1,4 @@
-import { z } from "../../../deps.ts";
+import { z } from "zod";
 import { IntlText } from "../intlstring.ts";
 
 export type AnimeList = Array<Anime>;

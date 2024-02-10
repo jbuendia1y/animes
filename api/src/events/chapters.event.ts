@@ -1,4 +1,4 @@
-import { MongoDatabase } from "../../deps.ts";
+import { Database as MongoDatabase } from "mongodb";
 import {
   CreateChapter,
   CreateUserNotification,

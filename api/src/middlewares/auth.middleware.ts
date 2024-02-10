@@ -1,4 +1,4 @@
-import { container } from "npm:tsyringe";
+import { container } from "tsyringe";
 import { Context, Status } from "../../deps.ts";
 import { DI_TOKEN } from "../di.ts";
 import type { UsersRepository } from "../repositories/users/users.repository.ts";

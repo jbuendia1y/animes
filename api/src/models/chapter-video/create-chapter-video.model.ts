@@ -1,4 +1,4 @@
-import { z } from "../../../deps.ts";
+import { z } from "zod";
 
 interface ICreateChapterVideo {
   player: string;

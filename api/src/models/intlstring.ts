@@ -1,4 +1,4 @@
-import { z } from "../../deps.ts";
+import { z } from "zod";
 
 export const CreateIntlTextSchema = z.object({
   en: z.string().optional(),

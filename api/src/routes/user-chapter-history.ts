@@ -1,9 +1,11 @@
-import { Router, Status, z } from "../../deps.ts";
+import { Status } from "../../deps.ts";
+import { Router } from "$oak/mod.ts";
+import { z } from "zod";
 import { authMiddleware } from "../middlewares/auth.middleware.ts";
 import { handleRouteErrors } from "../middlewares/handleRouteErrors.ts";
 import { API_PREFIX_V1 } from "../constants.ts";
 import { UserChapterHistoryController } from "../controllers/index.ts";
-import { container } from "npm:tsyringe";
+import { container } from "tsyringe";
 
 const controller = container.resolve<UserChapterHistoryController>(
   UserChapterHistoryController.name,

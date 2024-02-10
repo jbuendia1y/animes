@@ -1,8 +1,11 @@
-import { getQuery, queryString, RouterContext, Status } from "../../deps.ts";
+import { queryString, Status } from "../../deps.ts";
+import { getQuery } from "$oak/helpers.ts";
+import { RouterContext } from "$oak/mod.ts";
+import { inject, injectable } from "tsyringe";
+
 import { AnimeFilter, CreateAnime, UpdateAnime } from "../models/index.ts";
-import { AnimesRepository } from "../repositories/animes/animes.repository.ts";
+import type { AnimesRepository } from "../repositories/animes/animes.repository.ts";
 import { DI_TOKEN } from "../di.ts";
-import { inject, injectable } from "npm:tsyringe";
 
 @injectable()
 export class AnimesContoller {

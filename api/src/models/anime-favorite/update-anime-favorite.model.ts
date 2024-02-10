@@ -1,4 +1,4 @@
-import { z } from "../../../deps.ts";
+import { z } from "zod";
 
 const UpdateAnimeFavoriteSchema = z.object({
   stars: z.number().min(1).max(5),

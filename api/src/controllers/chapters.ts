@@ -1,4 +1,8 @@
-import { getQuery, RouterContext, Status, z } from "../../deps.ts";
+import { Status } from "../../deps.ts";
+import { z } from "zod";
+import { getQuery } from "$oak/helpers.ts";
+import { RouterContext } from "$oak/mod.ts";
+
 import {
   CreateChapterEvent,
   emitChapterEvent,
@@ -8,9 +12,9 @@ import {
   CreateChapter,
   UpdateChapter,
 } from "../models/index.ts";
-import { ChaptersRepository } from "../repositories/chapters/chapters.repository.ts";
+import type { ChaptersRepository } from "../repositories/chapters/chapters.repository.ts";
 import { DI_TOKEN } from "../di.ts";
-import { inject, injectable } from "npm:tsyringe";
+import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class ChaptersController {

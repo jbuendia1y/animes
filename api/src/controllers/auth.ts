@@ -1,8 +1,12 @@
-import { inject, injectable } from "npm:tsyringe";
-import { createJWT, Payload, RouterContext, Status, z } from "../../deps.ts";
+import { inject, injectable } from "tsyringe";
+import { z } from "zod";
+import { RouterContext } from "$oak/mod.ts";
+import { create as createJWT, Payload } from "djwt";
+import { Status } from "../../deps.ts";
+
 import { JWT_ALG, JWT_KEY } from "../config/index.ts";
 import { CreateUser } from "../models/index.ts";
-import { UsersRepository } from "../repositories/users/users.repository.ts";
+import type { UsersRepository } from "../repositories/users/users.repository.ts";
 import { AuthUtils } from "../utils/index.ts";
 import { DI_TOKEN } from "../di.ts";
 

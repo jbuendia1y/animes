@@ -1,5 +1,10 @@
-import { inject, injectable } from "npm:tsyringe";
-import { MongoCollection, MongoDatabase, ObjectId } from "../../../deps.ts";
+import { inject, injectable } from "tsyringe";
+import {
+  Collection as MongoCollection,
+  Database as MongoDatabase,
+  ObjectId,
+} from "mongodb";
+
 import { createChapterVideoAddapted } from "../../addapters/chapter-video.addapter.ts";
 import { ResourceAllReadyExistError } from "../../errors/index.ts";
 import {
@@ -54,7 +59,6 @@ export class MongoChapterVideosRepository implements ChapterVideosRepository {
       chapterId: values.chapterId,
       embedURL: values.embedURL,
       player: values.player,
-      provider: values.provider,
       videoURL: values.videoURL,
     });
   }
@@ -70,3 +74,8 @@ export class MongoChapterVideosRepository implements ChapterVideosRepository {
     await this.collection.deleteOne({ _id: ObjectId.createFromHexString(id) });
   }
 }
+
+export const DI_REPO = {
+  TOKEN: DI_TOKEN.CHAPTER_VIDEOS_REPO,
+  VALUE: MongoChapterVideosRepository,
+};

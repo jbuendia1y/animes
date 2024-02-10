@@ -1,4 +1,5 @@
-import { z } from "../../../deps.ts";
+import { z } from "zod";
+
 import { CreateIntlTextSchema, IntlText } from "../intlstring.ts";
 
 export type ICreateTag = z.infer<typeof CreateTagSchema>;

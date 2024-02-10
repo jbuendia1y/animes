@@ -1,13 +1,16 @@
-import { getQuery, RouterContext, Status } from "../../deps.ts";
+import { Status } from "../../deps.ts";
+import { getQuery } from "$oak/helpers.ts";
+import { RouterContext } from "$oak/mod.ts";
+
 import {
   CreateUserAnime,
   DeleteUserAnime,
   UserAnimeFilter,
 } from "../models/user-anime/index.ts";
-import { UserAnimesRepository } from "../repositories/user-anime/user-anime.repository.ts";
+import type { UserAnimesRepository } from "../repositories/user-anime/user-anime.repository.ts";
 import { AuthUtils } from "../utils/index.ts";
 import { DI_TOKEN } from "../di.ts";
-import { inject, injectable } from "npm:tsyringe";
+import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class UserAnimesController {

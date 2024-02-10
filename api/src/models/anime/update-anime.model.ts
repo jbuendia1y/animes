@@ -1,4 +1,5 @@
-import { z } from "../../../deps.ts";
+import { z } from "zod";
+
 import { CreateIntlTextSchema, IntlText } from "../intlstring.ts";
 import { IAnimeTag } from "./anime.model.ts";
 import { CreateAnimeTagSchema } from "./create-anime.model.ts";

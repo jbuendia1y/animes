@@ -1,4 +1,5 @@
-import { z } from "../../../deps.ts";
+import { z } from "zod";
+
 import { ITitles } from "../index.ts";
 import { IChapter } from "./chapter.model.ts";
 

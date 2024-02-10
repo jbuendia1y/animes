@@ -1,8 +1,11 @@
-import { getQuery, RouterContext, Status } from "../../deps.ts";
-import { CreateTag, TagFilter } from "../models/index.ts";
-import { TagsRepository } from "../repositories/tags/tags.repository.ts";
+import { Status } from "../../deps.ts";
+import { getQuery } from "$oak/helpers.ts";
+import { RouterContext } from "$oak/mod.ts";
+
+import { CreateTag, TagFilter, UpdateTag } from "../models/index.ts";
+import type { TagsRepository } from "../repositories/tags/tags.repository.ts";
 import { DI_TOKEN } from "../di.ts";
-import { inject, injectable } from "npm:tsyringe";
+import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class TagsController {
@@ -42,5 +45,14 @@ export class TagsController {
 
     await this.repository.save(data);
     ctx.response.status = Status.Created;
+  }
+
+  public async updateTag(ctx: RouterContext<"/:id">) {
+    const result = ctx.request.body({ type: "json" });
+    const body = await result.value;
+
+    const data = new UpdateTag(body);
+    await this.repository.update(ctx.params.id, data);
+    ctx.response.status = Status.OK;
   }
 }

@@ -1,5 +1,5 @@
 import "npm:reflect-metadata";
-import { container } from "npm:tsyringe";
+import { container } from "tsyringe";
 import { authMiddleware } from "../../src/middlewares/auth.middleware.ts";
 import { AuthUtils } from "../../src/utils/index.ts";
 import { assertEquals, stub, testing } from "../../test.deps.ts";

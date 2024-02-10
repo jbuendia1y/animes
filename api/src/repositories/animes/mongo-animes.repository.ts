@@ -1,5 +1,10 @@
-import { inject, injectable } from "npm:tsyringe";
-import { MongoCollection, MongoDatabase, ObjectId } from "../../../deps.ts";
+import { inject, injectable } from "tsyringe";
+import {
+  Collection as MongoCollection,
+  Database as MongoDatabase,
+  ObjectId,
+} from "mongodb";
+
 import { createAnimeAddapted } from "../../addapters/anime.addapter.ts";
 import { ResourceAllReadyExistError } from "../../errors/index.ts";
 import {
@@ -77,3 +82,8 @@ export class MongoAnimesRepository implements AnimesRepository {
     );
   }
 }
+
+export const DI_REPO = {
+  TOKEN: DI_TOKEN.ANIMES_REPO,
+  VALUE: MongoAnimesRepository,
+};

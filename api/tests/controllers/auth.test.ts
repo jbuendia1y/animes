@@ -6,7 +6,7 @@ import { API_PREFIX_V1 } from "../../src/constants.ts";
 import { generateUserMock } from "../mocks/data/user.ts";
 import { mockRequestBody } from "../utils.ts";
 import { Status } from "../../deps.ts";
-import { container } from "npm:tsyringe";
+import { container } from "tsyringe";
 import { DI_TOKEN } from "../../src/di.ts";
 import { AuthUtils } from "../../src/utils/index.ts";
 

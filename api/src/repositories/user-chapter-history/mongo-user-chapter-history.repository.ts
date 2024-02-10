@@ -1,4 +1,8 @@
-import { MongoCollection, MongoDatabase, ObjectId } from "../../../deps.ts";
+import {
+  Collection as MongoCollection,
+  Database as MongoDatabase,
+  ObjectId,
+} from "mongodb";
 import { createUserChapterHistoryAddapted } from "../../addapters/user-chapter-history.addapter.ts";
 import {
   CreateUserChapterHistory,
@@ -9,7 +13,7 @@ import {
 } from "../../models/index.ts";
 import { UserChapterHistoryRepository } from "./user-chapter-history.repository.ts";
 import { DI_TOKEN } from "../../di.ts";
-import { inject, injectable } from "npm:tsyringe";
+import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class MongoUserChapterHistoryRepository
@@ -54,3 +58,8 @@ export class MongoUserChapterHistoryRepository
     await this.collection.deleteOne({ _id: ObjectId.createFromHexString(id) });
   }
 }
+
+export const DI_REPO = {
+  TOKEN: DI_TOKEN.USER_CHAPTER_HISTORY_REPO,
+  VALUE: MongoUserChapterHistoryRepository,
+};

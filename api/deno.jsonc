@@ -4,5 +4,20 @@
     "dev": "deno run --watch -A main.ts",
     "test": "DENO_ENV=test deno test -A",
     "script:admin": "deno run -A scripts/admin.ts"
+  },
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "imports": {
+    "$std/": "https://deno.land/std@0.211.0/",
+    "$oak/": "https://deno.land/x/oak@v10.6.0/",
+    "$dotenv/": "https://deno.land/std@0.191.0/dotenv/",
+    "zod": "https://deno.land/x/zod@v3.21.4/mod.ts",
+    "djwt": "https://deno.land/x/djwt@v2.8/mod.ts",
+    "bcrypt": "https://deno.land/x/bcrypt@v0.4.1/mod.ts",
+    "cors": "https://deno.land/x/cors@v1.2.2/mod.ts",
+    "mongodb": "https://deno.land/x/mongo@v0.31.2/mod.ts",
+    "tsyringe": "npm:tsyringe"
   }
 }

@@ -1,5 +1,8 @@
-import { container } from "npm:tsyringe";
-import { bcrypt, Context, Payload, verifyJWT } from "../../deps.ts";
+import { container } from "tsyringe";
+import * as bcrypt from "bcrypt";
+
+import { Context } from "$oak/mod.ts";
+import { Payload, verify as verifyJWT } from "djwt";
 import { JWT_KEY } from "../config/index.ts";
 import { DI_TOKEN } from "../di.ts";
 

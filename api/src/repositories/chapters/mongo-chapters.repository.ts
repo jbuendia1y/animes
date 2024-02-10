@@ -1,5 +1,10 @@
-import { inject, injectable } from "npm:tsyringe";
-import { MongoCollection, MongoDatabase, ObjectId } from "../../../deps.ts";
+import { inject, injectable } from "tsyringe";
+import {
+  Collection as MongoCollection,
+  Database as MongoDatabase,
+  ObjectId,
+} from "mongodb";
+
 import { createChapterAddapted } from "../../addapters/chapter.addapter.ts";
 import { ResourceAllReadyExistError } from "../../errors/index.ts";
 import {
@@ -71,3 +76,8 @@ export class MongoChaptersRepository implements ChaptersRepository {
     );
   }
 }
+
+export const DI_REPO = {
+  TOKEN: DI_TOKEN.CHAPTERS_REPO,
+  VALUE: MongoChaptersRepository,
+};

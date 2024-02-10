@@ -1,5 +1,6 @@
 import "npm:reflect-metadata";
-import { MongoClient } from "../deps.ts";
+import { MongoClient } from "mongodb";
+
 import { CreateUser } from "../src/models/user/index.ts";
 import { MongoUsersRepository } from "../src/repositories/users/mongo-users.repository.ts";
 import { config } from "../src/config/index.ts";

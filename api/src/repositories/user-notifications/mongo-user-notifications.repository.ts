@@ -1,4 +1,8 @@
-import { MongoCollection, MongoDatabase, ObjectId } from "../../../deps.ts";
+import {
+  Collection as MongoCollection,
+  Database as MongoDatabase,
+  ObjectId,
+} from "mongodb";
 import { createUserNotificationAddapted } from "../../addapters/user-notification.addapter.ts";
 import {
   CreateUserNotification,
@@ -11,7 +15,7 @@ import {
 } from "../../models/index.ts";
 import { UserNotificationsRepository } from "./user-notifications.repository.ts";
 import { DI_TOKEN } from "../../di.ts";
-import { inject, injectable } from "npm:tsyringe";
+import { inject, injectable } from "tsyringe";
 
 @injectable()
 export class MongoUserNotificationsRepository
@@ -57,3 +61,8 @@ export class MongoUserNotificationsRepository
     });
   }
 }
+
+export const DI_REPO = {
+  TOKEN: DI_TOKEN.USER_NOTIFICATIONS_REPO,
+  VALUE: MongoUserNotificationsRepository,
+};
