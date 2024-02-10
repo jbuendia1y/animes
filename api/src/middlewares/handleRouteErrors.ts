@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { RouterContext } from "../../deps.ts";
+import { RouterContext } from "$oak/mod.ts";
 
 export const handleRouteErrors =
   (handler: (ctx: RouterContext<any, any, any>, err: any) => void) =>

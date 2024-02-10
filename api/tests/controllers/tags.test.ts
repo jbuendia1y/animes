@@ -1,7 +1,8 @@
 import "npm:reflect-metadata";
+import { createMockContext } from "$oak/testing.ts";
+
 import { MockTagsRepository } from "../mocks/repositories/tags.repository.ts";
 import { TagsController } from "../../src/controllers/tags.ts";
-import { createMockContext } from "https://deno.land/x/oak@v10.6.0/testing.ts";
 import { API_PREFIX_V1 } from "../../src/constants.ts";
 import {
   assertEquals,
@@ -50,7 +51,7 @@ Deno.test({
           {
             type: "json",
             value: Promise.resolve(mockCreateTagBody),
-          },
+          }
         );
 
         const spySave = spy(tagsRepo, "save");
@@ -74,7 +75,7 @@ Deno.test({
           {
             type: "json",
             value: Promise.resolve(mockCreateTagBody),
-          },
+          }
         );
 
         await assertRejects(() => controller.createTag(ctx));

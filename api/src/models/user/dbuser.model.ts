@@ -1,4 +1,4 @@
-import type { ObjectId } from "../../../deps.ts";
+import { ObjectId } from "mongodb";
 import type { IUser } from "./user.model.ts";
 
 export interface DBUser extends Omit<IUser, "id"> {

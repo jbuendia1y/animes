@@ -1,6 +1,6 @@
 // deno-lint-ignore-file
-import { Status } from "https://deno.land/std@0.140.0/http/http_status.ts";
-import { RouterContext } from "../../deps.ts";
+import { STATUS_CODE } from "$std/http/status.ts";
+import { RouterContext } from "$oak/mod.ts";
 
 import type { RateLimitConfig } from "../libs/rate-limit/interfaces.ts";
 import { MemoryRateLimiStore } from "../libs/rate-limit/stores/memory.store.ts";
@@ -10,7 +10,7 @@ export const rateLimitMiddleware = (config: RateLimitConfig) => {
 
   return async (
     ctx: RouterContext<any, any, any>,
-    next: () => Promise<unknown>,
+    next: () => Promise<unknown>
   ) => {
     const ip = ctx.request.ip;
     const rateLimit = await store.get(ip);
@@ -18,7 +18,7 @@ export const rateLimitMiddleware = (config: RateLimitConfig) => {
     if ((rateLimit?.requests ?? 0) === config.limit) {
       const breakTime = new Date().getTime() - rateLimit!.timestamp.getTime();
       if (breakTime < config.breakTime) {
-        ctx.response.status = Status.TooManyRequests;
+        ctx.response.status = STATUS_CODE.TooManyRequests;
         ctx.response.body = {
           message: "Too many requests, please try again later.",
         };

@@ -1,5 +1,5 @@
 import { container } from "tsyringe";
-import { Context, Status } from "../../deps.ts";
+import { Context, Status } from "$oak/mod.ts";
 import { DI_TOKEN } from "../di.ts";
 import type { UsersRepository } from "../repositories/users/users.repository.ts";
 import { AuthUtils } from "../utils/index.ts";
@@ -8,7 +8,7 @@ export const authMiddleware =
   ({ role }: { role?: "isAdmin" } = {}) =>
   async (ctx: Context, next: () => Promise<unknown>) => {
     const usersRepository = container.resolve<UsersRepository>(
-      DI_TOKEN.USERS_REPO,
+      DI_TOKEN.USERS_REPO
     );
 
     const userId = await AuthUtils.getUserIdFromHeaders(ctx);

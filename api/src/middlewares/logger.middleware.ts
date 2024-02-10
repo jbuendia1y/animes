@@ -1,11 +1,8 @@
 // deno-lint-ignore-file no-explicit-any
-import { Context, State } from "../../deps.ts";
-import * as log from "https://deno.land/std@0.210.0/log/mod.ts";
+import { Context, State } from "$oak/mod.ts";
+import * as log from "$std/log/mod.ts";
 import { DENO_ENV } from "../config/index.ts";
-import {
-  isErrorStatus,
-  STATUS_TEXT,
-} from "https://deno.land/x/oak@v10.6.0/mod.ts";
+import { isErrorStatus, STATUS_TEXT } from "$oak/mod.ts";
 
 const infoFileHandler = new log.handlers.FileHandler("INFO", {
   formatter: log.formatters.jsonFormatter,
@@ -36,7 +33,7 @@ log.setup({
 export const requestLoggerMiddleware = () => {
   return (async (
     ctx: Context<State, Record<string, any>>,
-    next: () => Promise<void>,
+    next: () => Promise<void>
   ) => {
     const start = performance.now();
     await next();

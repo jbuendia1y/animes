@@ -1,4 +1,4 @@
-import { ObjectId } from "../../../deps.ts";
+import { ObjectId } from "mongodb";
 
 export interface DBUserNotification extends Omit<IUserNotification, "id"> {
   _id: ObjectId;
