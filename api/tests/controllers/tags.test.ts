@@ -51,7 +51,7 @@ Deno.test({
           {
             type: "json",
             value: Promise.resolve(mockCreateTagBody),
-          }
+          },
         );
 
         const spySave = spy(tagsRepo, "save");
@@ -75,7 +75,7 @@ Deno.test({
           {
             type: "json",
             value: Promise.resolve(mockCreateTagBody),
-          }
+          },
         );
 
         await assertRejects(() => controller.createTag(ctx));

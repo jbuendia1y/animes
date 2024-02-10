@@ -33,7 +33,7 @@ log.setup({
 export const requestLoggerMiddleware = () => {
   return (async (
     ctx: Context<State, Record<string, any>>,
-    next: () => Promise<void>
+    next: () => Promise<void>,
   ) => {
     const start = performance.now();
     await next();

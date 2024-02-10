@@ -31,7 +31,7 @@ export class MockTagsRepository implements TagsRepository {
       new Paginate({
         data: this.data,
         meta: { total: this.data.length },
-      })
+      }),
     );
   }
 
@@ -40,7 +40,7 @@ export class MockTagsRepository implements TagsRepository {
       new Tag({
         ...data.values,
         id: crypto.randomUUID(),
-      })
+      }),
     );
     return Promise.resolve();
   }

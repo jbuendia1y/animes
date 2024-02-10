@@ -8,7 +8,7 @@ export const authMiddleware =
   ({ role }: { role?: "isAdmin" } = {}) =>
   async (ctx: Context, next: () => Promise<unknown>) => {
     const usersRepository = container.resolve<UsersRepository>(
-      DI_TOKEN.USERS_REPO
+      DI_TOKEN.USERS_REPO,
     );
 
     const userId = await AuthUtils.getUserIdFromHeaders(ctx);
