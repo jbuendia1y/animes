@@ -37,6 +37,7 @@ export class Favorite {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CreateFavoriteSchema = z.object({
   stars: z.number().min(1),
   animeId: z.string(),
@@ -61,6 +62,7 @@ export class CreateFavorite {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const UpdateFavoriteSchema = z.object({
   stars: z.number().min(1),
 });

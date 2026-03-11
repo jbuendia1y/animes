@@ -135,7 +135,7 @@ export function ProfileHistory() {
                     <Typography
                       variant="body2"
                       component="p"
-                      color={(theme) => theme.palette.text.secondary}
+                      color="text.secondary"
                     >
                       {chapter.airdate}
                     </Typography>

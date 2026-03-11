@@ -41,7 +41,7 @@ export function ChapterItem({ id, title, number, thumbnail, airdate }: Props) {
         <Typography
           variant="body2"
           component="p"
-          color={(theme) => theme.palette.text.secondary}
+          color="text.secondary"
         >
           {airdate}
         </Typography>

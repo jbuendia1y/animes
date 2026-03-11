@@ -1,9 +1,9 @@
 import { Box, BoxProps } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface Props<D = unknown> extends BoxProps {
   data: D[];
-  renderItem: (data: D, ref: (el: HTMLElement | null) => void) => JSX.Element;
+  renderItem: (data: D, ref: (el: HTMLElement | null) => void) => React.ReactElement;
   options?: IntersectionObserverInit;
   onChange: (() => void) | (() => Promise<void>);
 }

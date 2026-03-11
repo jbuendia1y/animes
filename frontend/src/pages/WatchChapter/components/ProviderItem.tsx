@@ -11,7 +11,7 @@ interface Props {
 export function ProviderItem({
   provider,
   players,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+   
   onSelect = () => {},
 }: Props) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

@@ -18,7 +18,7 @@ export function Carousel({ children }: Props) {
   return (
     <Box position="relative">
       <IconButton
-        onClick={prev}
+        onClick={() => prev()}
         disabled={!canPrev}
         size="small"
         sx={{
@@ -41,7 +41,7 @@ export function Carousel({ children }: Props) {
         />
       </IconButton>
       <IconButton
-        onClick={next}
+        onClick={() => next()}
         disabled={!canNext}
         size="small"
         sx={{

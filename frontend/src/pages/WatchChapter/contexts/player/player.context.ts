@@ -16,7 +16,7 @@ export const DefaultPlayerCtxValue: PlayerCtxValue = {
   player: null,
   videos: null,
   loading: true,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+   
   selectPlayer: () => {},
 };
 

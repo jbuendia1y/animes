@@ -42,7 +42,7 @@ export function NewAnimeButton() {
         <Typography
           variant="h6"
           component="span"
-          color={(theme) => theme.palette.text.secondary}
+          color="text.secondary"
         >
           Nuevo anime
         </Typography>
