@@ -4,44 +4,27 @@ log.txt
 # Docker volumes
 .dev
 
-# Test Coverage
-coverage
-*.lcov
+# Nestjs specific
+/dist
+/node_modules
+/build
+/tmp
 
-*.orig
-*.pyc
-*.swp
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# dotenv environment variable files
 .env
+.env.development
+.env.test
+.env.production
 
-/.cargo_home/
-/.idea/
-/.vs/
-gclient_config.py_entries
-/target/
-/std/hash/_wasm/target
-/tools/wpt/manifest.json
-/third_party/
-/test_napi/node_modules
-/test_napi/build
-/test_napi/third_party_tests/node_modules
-
-# MacOS generated files
-.DS_Store
-.DS_Store?
-
-# Flamegraphs
-/flamebench*.svg
-/flamegraph*.svg
-
-# WPT generated cert files
-/tools/wpt/certs/index.txt*
-/tools/wpt/certs/serial*
-
-/ext/websocket/autobahn/reports
-
-# JUnit files produced by deno test --junit
-junit.xml
-
-# Jupyter files
-.ipynb_checkpoints/
-Untitled*.ipynb
+# temp directory
+.temp
+.tmp

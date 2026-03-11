@@ -1,8 +1,0 @@
-{
-  "tasks": {
-    "start": "DENO_ENV=production deno run -A main.ts",
-    "dev": "deno run --watch -A main.ts",
-    "test": "DENO_ENV=test deno test -A",
-    "script:admin": "deno run -A scripts/admin.ts"
-  }
-}

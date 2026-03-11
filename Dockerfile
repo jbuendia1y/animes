@@ -1,4 +1,4 @@
-FROM node:18.14.0-alpine as build
+FROM node:18.14.0-alpine as frontend
 
 WORKDIR /frontend
 
@@ -7,16 +7,14 @@ COPY ./frontend/ .
 RUN npm i
 RUN npm run build
 
-FROM denoland/deno:alpine-1.39.4
+FROM node:18.14.0-alpine as api
 
 WORKDIR /api
 
-# get app build
-COPY --from=build /frontend/dist/ /frontend/dist/
+COPY --from=frontend /frontend/dist/ /frontend/dist/
 
-# cache dependencies
-COPY ./api/deps.ts .
-RUN deno cache deps.ts
+COPY ./api/package.json ./api/pnpm-lock.yaml ./
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
 
 COPY ./api/ .
 
@@ -24,4 +22,4 @@ ENV PORT=${PORT:-3000}
 
 EXPOSE ${PORT}
 
-CMD ["deno", "task", "start"]
+CMD ["pnpm", "run", "start:prod"]
