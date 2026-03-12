@@ -2,6 +2,7 @@ import { Controller, Get, Post, Patch, Body, Param, Query, UseGuards } from '@ne
 import { ChaptersService } from './chapters.service';
 import { CreateChapterDto, UpdateChapterDto, ChapterQueryDto } from './dto/chapter.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { AdminGuard } from '../../common/guards/admin.guard';
 
 @Controller('chapters')
 export class ChaptersController {
@@ -18,13 +19,13 @@ export class ChaptersController {
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   create(@Body() createChapterDto: CreateChapterDto) {
     return this.chaptersService.create(createChapterDto);
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   update(@Param('id') id: string, @Body() updateChapterDto: UpdateChapterDto) {
     return this.chaptersService.update(id, updateChapterDto);
   }

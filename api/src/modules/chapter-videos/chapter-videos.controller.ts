@@ -16,6 +16,7 @@ import {
   ChapterVideoQueryDto,
 } from './dto/chapter-video.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { AdminGuard } from '../../common/guards/admin.guard';
 
 @Controller('chapters/videos')
 export class ChapterVideosController {
@@ -32,19 +33,19 @@ export class ChapterVideosController {
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   create(@Body() createDto: CreateChapterVideoDto) {
     return this.chapterVideosService.create(createDto);
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   update(@Param('id') id: string, @Body() updateDto: UpdateChapterVideoDto) {
     return this.chapterVideosService.update(id, updateDto);
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   delete(@Param('id') id: string) {
     return this.chapterVideosService.delete(id);
   }
