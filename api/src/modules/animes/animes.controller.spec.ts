@@ -1,30 +1,30 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AnimesController } from './animes.controller';
-import { AnimesService } from './animes.service';
-import { NotFoundException, ConflictException } from '@nestjs/common';
-import { CreateAnimeDto, UpdateAnimeDto, AnimeQueryDto } from './dto/anime.dto';
-import { getModelToken } from '@nestjs/mongoose';
-import { Anime } from './entities/anime.entity';
-import { Types } from 'mongoose';
+import { Test, TestingModule } from "@nestjs/testing";
+import { AnimesController } from "./animes.controller";
+import { AnimesService } from "./animes.service";
+import { NotFoundException, ConflictException } from "@nestjs/common";
+import { CreateAnimeDto, UpdateAnimeDto, AnimeQueryDto } from "./dto/anime.dto";
+import { getModelToken } from "@nestjs/mongoose";
+import { Anime } from "./entities/anime.entity";
+import { Types } from "mongoose";
 
-describe('AnimesController', () => {
+describe("AnimesController", () => {
   let controller: AnimesController;
   let animesService: AnimesService;
 
   const mockAnime = {
-    _id: new Types.ObjectId('507f1f77bcf86cd799439011'),
-    slug: 'one-piece',
-    titles: { en: 'One Piece', ja_jp: 'ワンピース' },
-    canonicalTitle: 'One Piece',
-    synopsis: 'Monkey D. Luffy sets off on an adventure...',
-    description: 'A long description',
+    _id: new Types.ObjectId("507f1f77bcf86cd799439011"),
+    slug: "one-piece",
+    titles: { en: "One Piece", ja_jp: "ワンピース" },
+    canonicalTitle: "One Piece",
+    synopsis: "Monkey D. Luffy sets off on an adventure...",
+    description: "A long description",
     stars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
     tags: [],
-    posterImage: 'https://example.com/poster.jpg',
-    coverImage: 'https://example.com/cover.jpg',
+    posterImage: "https://example.com/poster.jpg",
+    coverImage: "https://example.com/cover.jpg",
     nsfw: false,
-    status: 'finished',
-    showType: 'TV',
+    status: "finished",
+    showType: "TV",
   };
 
   const mockAnimesService = {
@@ -48,9 +48,12 @@ describe('AnimesController', () => {
     jest.clearAllMocks();
   });
 
-  describe('findAll', () => {
-    it('should return paginated list of animes', async () => {
-      const query: AnimeQueryDto = { limit: 10, offset: 0 };
+  describe("findAll", () => {
+    it("should return paginated list of animes", async () => {
+      const query: AnimeQueryDto = {
+        limit: 10,
+        offset: 0,
+      };
       const expectedResponse = {
         data: [mockAnime],
         meta: { total: 1 },
@@ -64,7 +67,7 @@ describe('AnimesController', () => {
       expect(result).toEqual(expectedResponse);
     });
 
-    it('should return empty list when no animes exist', async () => {
+    it("should return empty list when no animes exist", async () => {
       const query: AnimeQueryDto = {};
       const expectedResponse = {
         data: [],
@@ -78,8 +81,8 @@ describe('AnimesController', () => {
       expect(result).toEqual(expectedResponse);
     });
 
-    it('should filter animes by slug query', async () => {
-      const query: AnimeQueryDto = { slug: 'one-piece' };
+    it("should filter animes by slug query", async () => {
+      const query: AnimeQueryDto = { slug: "one-piece" };
       const expectedResponse = {
         data: [mockAnime],
         meta: { total: 1 },
@@ -94,8 +97,8 @@ describe('AnimesController', () => {
     });
   });
 
-  describe('findOne', () => {
-    it('should return a single anime by id', async () => {
+  describe("findOne", () => {
+    it("should return a single anime by id", async () => {
       const animeId = mockAnime._id.toString();
 
       mockAnimesService.findOne.mockResolvedValue(mockAnime);
@@ -106,8 +109,8 @@ describe('AnimesController', () => {
       expect(result).toEqual(mockAnime);
     });
 
-    it('should return null for invalid id format', async () => {
-      const invalidId = 'invalid-id';
+    it("should return null for invalid id format", async () => {
+      const invalidId = "invalid-id";
 
       mockAnimesService.findOne.mockResolvedValue(null);
 
@@ -118,18 +121,18 @@ describe('AnimesController', () => {
     });
   });
 
-  describe('create', () => {
-    it('should create a new anime', async () => {
+  describe("create", () => {
+    it("should create a new anime", async () => {
       const createAnimeDto: CreateAnimeDto = {
-        slug: 'new-anime',
-        titles: { en: 'New Anime' },
-        canonicalTitle: 'New Anime',
-        synopsis: 'New synopsis',
-        description: 'New description',
-        showType: 'TV',
-        status: 'ongoing',
-        posterImage: 'https://example.com/poster.jpg',
-        coverImage: 'https://example.com/cover.jpg',
+        slug: "new-anime",
+        titles: { en: "New Anime" },
+        canonicalTitle: "New Anime",
+        synopsis: "New synopsis",
+        description: "New description",
+        showType: "TV",
+        status: "ongoing",
+        posterImage: "https://example.com/poster.jpg",
+        coverImage: "https://example.com/cover.jpg",
       };
 
       mockAnimesService.create.mockResolvedValue({
@@ -145,19 +148,19 @@ describe('AnimesController', () => {
       expect(result.slug).toEqual(createAnimeDto.slug);
     });
 
-    it('should throw ConflictException on duplicate slug', async () => {
+    it("should throw ConflictException on duplicate slug", async () => {
       const createAnimeDto: CreateAnimeDto = {
-        slug: 'existing-anime',
-        titles: { en: 'Existing Anime' },
-        canonicalTitle: 'Existing Anime',
-        synopsis: 'Synopsis',
-        description: 'Description',
-        showType: 'TV',
-        status: 'ongoing',
+        slug: "existing-anime",
+        titles: { en: "Existing Anime" },
+        canonicalTitle: "Existing Anime",
+        synopsis: "Synopsis",
+        description: "Description",
+        showType: "TV",
+        status: "ongoing",
       };
 
       mockAnimesService.create.mockRejectedValue(
-        new ConflictException('Anime with this slug already exists'),
+        new ConflictException("Anime with this slug already exists"),
       );
 
       await expect(controller.create(createAnimeDto)).rejects.toThrow(
@@ -166,13 +169,13 @@ describe('AnimesController', () => {
     });
   });
 
-  describe('update', () => {
-    it('should update an existing anime', async () => {
+  describe("update", () => {
+    it("should update an existing anime", async () => {
       const animeId = mockAnime._id.toString();
       const updateAnimeDto = {
-        canonicalTitle: 'Updated Title',
+        canonicalTitle: "Updated Title",
       };
-      const updatedAnime = { ...mockAnime, canonicalTitle: 'Updated Title' };
+      const updatedAnime = { ...mockAnime, canonicalTitle: "Updated Title" };
 
       mockAnimesService.update.mockResolvedValue(updatedAnime);
 
@@ -182,15 +185,15 @@ describe('AnimesController', () => {
         animeId,
         updateAnimeDto,
       );
-      expect(result.canonicalTitle).toBe('Updated Title');
+      expect(result.canonicalTitle).toBe("Updated Title");
     });
 
-    it('should throw NotFoundException when anime does not exist', async () => {
+    it("should throw NotFoundException when anime does not exist", async () => {
       const animeId = new Types.ObjectId().toString();
-      const updateAnimeDto = { canonicalTitle: 'New Title' };
+      const updateAnimeDto = { canonicalTitle: "New Title" };
 
       mockAnimesService.update.mockRejectedValue(
-        new NotFoundException('Anime not found'),
+        new NotFoundException("Anime not found"),
       );
 
       await expect(controller.update(animeId, updateAnimeDto)).rejects.toThrow(

@@ -1,9 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
-import { EventEmitter2 } from '@nestjs/event-emitter';
-import { Chapter, ChapterDocument } from './entities/chapter.entity';
-import { CreateChapterDto, UpdateChapterDto, ChapterQueryDto } from './dto/chapter.dto';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model, Types } from "mongoose";
+import { EventEmitter2 } from "@nestjs/event-emitter";
+import { Chapter, ChapterDocument } from "./entities/chapter.entity";
+import {
+  CreateChapterDto,
+  UpdateChapterDto,
+  ChapterQueryDto,
+} from "./dto/chapter.dto";
 
 @Injectable()
 export class ChaptersService {
@@ -17,18 +21,22 @@ export class ChaptersService {
     if (query.animeId) filter.animeId = query.animeId;
     if (query.number) filter.number = query.number;
 
-    const sort: any = {};
-    if (query.sort) {
-      sort.createdAt = parseInt(query.sort);
-    }
-
     const limit = query.limit || 25;
     const offset = query.offset || 0;
 
     const [data, total] = await Promise.all([
       this.chapterModel
         .find(filter)
-        .sort(sort)
+        .sort(
+          query.sort?.createdAt
+            ? {
+                createdAt:
+                  parseInt(query.sort.createdAt.toString()) === 1
+                    ? "asc"
+                    : "desc",
+              }
+            : {},
+        )
         .limit(limit)
         .skip(offset)
         .exec(),
@@ -47,7 +55,7 @@ export class ChaptersService {
     const created = new this.chapterModel(createChapterDto);
     const saved = await created.save();
 
-    this.eventEmitter.emit('chapter.created', {
+    this.eventEmitter.emit("chapter.created", {
       _id: saved._id,
       canonicalTitle: saved.canonicalTitle,
       titles: saved.titles,
@@ -63,7 +71,7 @@ export class ChaptersService {
     updateChapterDto: UpdateChapterDto,
   ): Promise<ChapterDocument> {
     const chapter = await this.findOne(id);
-    if (!chapter) throw new NotFoundException('Chapter not found');
+    if (!chapter) throw new NotFoundException("Chapter not found");
     Object.assign(chapter, updateChapterDto);
     return chapter.save();
   }

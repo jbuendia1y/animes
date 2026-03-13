@@ -1,5 +1,11 @@
-import { IsString, IsOptional, IsNumber, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
+import {
+  IsString,
+  IsOptional,
+  IsNumber,
+  ValidateNested,
+  IsObject,
+} from "class-validator";
+import { Type } from "class-transformer";
 
 class IntlTextDto {
   @IsOptional()
@@ -78,6 +84,10 @@ export class UpdateChapterDto {
   thumbnail?: string;
 }
 
+export class ChapterQuerySortDto {
+  createdAt?: -1 | 1;
+}
+
 export class ChapterQueryDto {
   @IsOptional()
   @IsString()
@@ -90,8 +100,8 @@ export class ChapterQueryDto {
   number?: number;
 
   @IsOptional()
-  @IsString()
-  sort?: string;
+  @IsObject()
+  sort?: ChapterQuerySortDto;
 
   @IsOptional()
   @IsNumber()

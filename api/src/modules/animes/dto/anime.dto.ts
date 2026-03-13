@@ -9,8 +9,8 @@ import {
   Min,
   Max,
   IsEnum,
-} from 'class-validator';
-import { Type } from 'class-transformer';
+} from "class-validator";
+import { Type } from "class-transformer";
 
 class IntlTextDto {
   @IsOptional()
@@ -94,8 +94,8 @@ export class UpdateAnimeStarsDto {
   @Max(5)
   star: number;
 
-  @IsEnum(['increment', 'decrement'])
-  type: 'increment' | 'decrement';
+  @IsEnum(["increment", "decrement"])
+  type: "increment" | "decrement";
 }
 
 export class UpdateAnimeDto {
@@ -151,10 +151,18 @@ export class UpdateAnimeDto {
   coverImage?: string;
 }
 
+export class AnimeQuerySortDto {
+  createdAt?: -1 | 1;
+}
+
 export class AnimeQueryDto {
   @IsOptional()
   @IsString()
   slug?: string;
+
+  @IsOptional()
+  @IsObject()
+  sort?: AnimeQuerySortDto;
 
   @IsOptional()
   @IsString()

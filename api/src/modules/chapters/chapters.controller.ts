@@ -1,10 +1,24 @@
-import { Controller, Get, Post, Patch, Body, Param, Query, UseGuards } from '@nestjs/common';
-import { ChaptersService } from './chapters.service';
-import { CreateChapterDto, UpdateChapterDto, ChapterQueryDto } from './dto/chapter.dto';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
-import { AdminGuard } from '../../common/guards/admin.guard';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Body,
+  Param,
+  Query,
+  UseGuards,
+  Req,
+} from "@nestjs/common";
+import { ChaptersService } from "./chapters.service";
+import {
+  CreateChapterDto,
+  UpdateChapterDto,
+  ChapterQueryDto,
+} from "./dto/chapter.dto";
+import { JwtAuthGuard } from "../../common/guards/jwt-auth.guard";
+import { AdminGuard } from "../../common/guards/admin.guard";
 
-@Controller('chapters')
+@Controller("chapters")
 export class ChaptersController {
   constructor(private readonly chaptersService: ChaptersService) {}
 
@@ -13,8 +27,8 @@ export class ChaptersController {
     return this.chaptersService.findAll(query);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Get(":id")
+  findOne(@Param("id") id: string) {
     return this.chaptersService.findOne(id);
   }
 
@@ -24,9 +38,9 @@ export class ChaptersController {
     return this.chaptersService.create(createChapterDto);
   }
 
-  @Patch(':id')
+  @Patch(":id")
   @UseGuards(JwtAuthGuard, AdminGuard)
-  update(@Param('id') id: string, @Body() updateChapterDto: UpdateChapterDto) {
+  update(@Param("id") id: string, @Body() updateChapterDto: UpdateChapterDto) {
     return this.chaptersService.update(id, updateChapterDto);
   }
 }
