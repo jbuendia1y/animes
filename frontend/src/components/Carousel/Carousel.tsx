@@ -1,13 +1,9 @@
+import { PropsWithChildren } from "react";
 import { Box, IconButton, Stack } from "@mui/material";
 import { useSnapCarousel } from "react-snap-carousel";
 import { ArrowNextIcon, ArrowPrevIcon } from "../icons";
 
-interface Props {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  children: any;
-}
-
-export function Carousel({ children }: Props) {
+export function Carousel({ children }: PropsWithChildren) {
   const { next, prev, scrollRef, activePageIndex, snapPointIndexes } =
     useSnapCarousel();
 

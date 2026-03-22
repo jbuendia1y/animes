@@ -1,4 +1,5 @@
 import { IsString, MinLength, IsOptional, IsBoolean, IsEmail } from 'class-validator';
+import { Expose, Transform } from 'class-transformer';
 
 export class CreateUserDto {
   @IsString()
@@ -54,4 +55,28 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   locale?: string;
+}
+
+export class UserResponseDto {
+  @Expose()
+  @Transform(({ obj }) => obj._id.toString())
+  id: string;
+
+  @Expose()
+  username: string;
+
+  @Expose()
+  email: string;
+
+  @Expose()
+  name: string;
+
+  @Expose()
+  avatar: string;
+
+  @Expose()
+  isAdmin: boolean;
+
+  @Expose()
+  locale: string;
 }

@@ -5,7 +5,7 @@ import {
   ValidateNested,
   IsObject,
 } from "class-validator";
-import { Type } from "class-transformer";
+import { Type, Expose, Transform } from "class-transformer";
 
 class IntlTextDto {
   @IsOptional()
@@ -114,4 +114,41 @@ export class ChapterQueryDto {
   @IsOptional()
   @Type(() => Number)
   offset?: number;
+}
+
+export interface IntlText {
+  en?: string;
+  es?: string;
+  en_jp?: string;
+  ja_jp?: string;
+}
+
+export class ChapterResponseDto {
+  @Expose()
+  @Transform(({ obj }) => obj._id.toString())
+  id: string;
+
+  @Expose()
+  canonicalTitle: string;
+
+  @Expose()
+  titles: IntlText;
+
+  @Expose()
+  synopsis: string;
+
+  @Expose()
+  description: string;
+
+  @Expose()
+  number: number;
+
+  @Expose()
+  airdate: string;
+
+  @Expose()
+  thumbnail: string;
+
+  @Expose()
+  animeId: string;
 }

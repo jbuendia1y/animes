@@ -1,5 +1,5 @@
 import { IsString, IsNumber, IsOptional } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Type, Expose, Transform } from 'class-transformer';
 
 export class CreateAnimeFavoriteDto {
   @IsNumber()
@@ -31,4 +31,19 @@ export class AnimeFavoriteQueryDto {
   @IsOptional()
   @Type(() => Number)
   offset?: number;
+}
+
+export class AnimeFavoriteResponseDto {
+  @Expose()
+  @Transform(({ obj }) => obj._id.toString())
+  id: string;
+
+  @Expose()
+  stars: number;
+
+  @Expose()
+  animeId: string;
+
+  @Expose()
+  userId: string;
 }

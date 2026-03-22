@@ -15,11 +15,12 @@ export class ChapterVideoService {
 
   async find({ chapterId }: { chapterId?: string } = {}) {
     const query = stringify({ chapterId });
-    const res = await axios.get<ChapterVideoEndpoint[]>(
-      this.baseUrl + "?" + query
-    );
+    const res = await axios.get<{
+      data: ChapterVideoEndpoint[];
+      meta: { total: number };
+    }>(this.baseUrl + "?" + query);
 
-    const data = res.data.map((v) => createChapterVideoAddapted(v));
+    const data = res.data.data.map((v) => createChapterVideoAddapted(v));
     return data;
   }
 

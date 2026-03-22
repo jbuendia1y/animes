@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { PropsWithChildren } from "react";
 import { useAuth } from "../hooks";
 
 export function SideRoleProtected({
   role,
   children,
-}: {
+}: PropsWithChildren<{
   role?: "isAdmin";
-  children: any;
-}) {
+}>) {
   const { user } = useAuth();
   if (!user) return;
 

@@ -1,27 +1,65 @@
-import { Controller, Get, Post, Delete, Body, Param, Query, UseGuards } from '@nestjs/common';
-import { UserChapterHistoryService } from './user-chapter-history.service';
-import { CreateUserChapterHistoryDto } from './dto/create-user-chapter-history.dto';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import {
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Body,
+  Param,
+  Query,
+  UseGuards,
+} from "@nestjs/common";
+import { UserChapterHistoryService } from "./user-chapter-history.service";
+import {
+  CreateUserChapterHistoryDto,
+  UserChapterHistoryResponseDto,
+} from "./dto/create-user-chapter-history.dto";
+import { JwtAuthGuard } from "../../common/guards/jwt-auth.guard";
+import { plainToInstance } from "class-transformer";
+import {
+  CurrentUser,
+  CurrentUserData,
+} from "@/common/decorators/current-user.decorator";
 
-@Controller('user-chapter-history')
+@Controller("animes/history")
 export class UserChapterHistoryController {
   constructor(private readonly historyService: UserChapterHistoryService) {}
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  findAll(@Query('userId') userId: string, @Query('page') page = '1', @Query('limit') limit = '25') {
-    return this.historyService.findAll(userId, parseInt(page), parseInt(limit));
+  async findAll(
+    @CurrentUser() user: CurrentUserData,
+    @Query("page") page = "1",
+    @Query("limit") limit = "25",
+  ) {
+    const { data, meta } = await this.historyService.findAll(
+      user.id,
+      parseInt(page),
+      parseInt(limit),
+    );
+    return {
+      data: plainToInstance(UserChapterHistoryResponseDto, data, {
+        excludeExtraneousValues: true,
+      }),
+      meta,
+    };
   }
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  create(@Body() createDto: CreateUserChapterHistoryDto) {
-    return this.historyService.create(createDto);
+  async create(
+    @CurrentUser() user: CurrentUserData,
+    @Body() createDto: CreateUserChapterHistoryDto,
+  ) {
+    createDto.userId = user.id;
+    const history = await this.historyService.create(createDto);
+    return plainToInstance(UserChapterHistoryResponseDto, history, {
+      excludeExtraneousValues: true,
+    });
   }
 
-  @Delete(':id')
+  @Delete(":id")
   @UseGuards(JwtAuthGuard)
-  delete(@Param('id') id: string) {
+  delete(@Param("id") id: string) {
     return this.historyService.delete(id);
   }
 }

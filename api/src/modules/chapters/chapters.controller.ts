@@ -8,39 +8,63 @@ import {
   Query,
   UseGuards,
   Req,
+  NotFoundException,
 } from "@nestjs/common";
 import { ChaptersService } from "./chapters.service";
 import {
   CreateChapterDto,
   UpdateChapterDto,
   ChapterQueryDto,
+  ChapterResponseDto,
 } from "./dto/chapter.dto";
 import { JwtAuthGuard } from "../../common/guards/jwt-auth.guard";
 import { AdminGuard } from "../../common/guards/admin.guard";
+import { plainToInstance } from "class-transformer";
 
 @Controller("chapters")
 export class ChaptersController {
   constructor(private readonly chaptersService: ChaptersService) {}
 
   @Get()
-  findAll(@Query() query: ChapterQueryDto) {
-    return this.chaptersService.findAll(query);
+  async findAll(@Query() query: ChapterQueryDto) {
+    const { data, meta } = await this.chaptersService.findAll(query);
+    return {
+      data: plainToInstance(ChapterResponseDto, data, {
+        excludeExtraneousValues: true,
+      }),
+      meta,
+    };
   }
 
-  @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.chaptersService.findOne(id);
+  @Get(":id([0-9a-fA-F]{24})")
+  async findOne(@Param("id") id: string) {
+    const chapter = await this.chaptersService.findOne(id);
+    if (!chapter) {
+      throw new NotFoundException("Chapter not found");
+    }
+    return plainToInstance(ChapterResponseDto, chapter, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @Post()
   @UseGuards(JwtAuthGuard, AdminGuard)
-  create(@Body() createChapterDto: CreateChapterDto) {
-    return this.chaptersService.create(createChapterDto);
+  async create(@Body() createChapterDto: CreateChapterDto) {
+    const chapter = await this.chaptersService.create(createChapterDto);
+    return plainToInstance(ChapterResponseDto, chapter, {
+      excludeExtraneousValues: true,
+    });
   }
 
-  @Patch(":id")
+  @Patch(":id([0-9a-fA-F]{24})")
   @UseGuards(JwtAuthGuard, AdminGuard)
-  update(@Param("id") id: string, @Body() updateChapterDto: UpdateChapterDto) {
-    return this.chaptersService.update(id, updateChapterDto);
+  async update(
+    @Param("id") id: string,
+    @Body() updateChapterDto: UpdateChapterDto,
+  ) {
+    const chapter = await this.chaptersService.update(id, updateChapterDto);
+    return plainToInstance(ChapterResponseDto, chapter, {
+      excludeExtraneousValues: true,
+    });
   }
 }

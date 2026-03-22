@@ -1,5 +1,5 @@
 import { IsString, IsOptional, IsNumber, IsBoolean } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Type, Expose, Transform } from 'class-transformer';
 
 export class CreateChapterVideoDto {
   @IsOptional()
@@ -54,4 +54,25 @@ export class ChapterVideoQueryDto {
   @IsOptional()
   @Type(() => Number)
   offset?: number;
+}
+
+export class ChapterVideoResponseDto {
+  @Expose()
+  @Transform(({ obj }) => obj._id.toString())
+  id: string;
+
+  @Expose()
+  provider: string;
+
+  @Expose()
+  player: string;
+
+  @Expose()
+  videoURL: string;
+
+  @Expose()
+  embedURL: string;
+
+  @Expose()
+  chapterId: string;
 }

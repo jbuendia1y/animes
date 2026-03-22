@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { AuthContext, AuthCtxValue, UserNotLogged } from "./context";
 import { AuthService, getAuthToken } from "../../services/auth.service";
 
-export const AuthProvider = ({ children }: { children: any }) => {
+export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<AuthCtxValue["user"]>(
-    getAuthToken() ? undefined : null
+    getAuthToken() ? undefined : null,
   );
 
   useEffect(() => {

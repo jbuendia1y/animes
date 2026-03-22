@@ -10,7 +10,7 @@ import {
   Max,
   IsEnum,
 } from "class-validator";
-import { Type } from "class-transformer";
+import { Expose, Transform, Type } from "class-transformer";
 
 class IntlTextDto {
   @IsOptional()
@@ -169,8 +169,9 @@ export class AnimeQueryDto {
   status?: string;
 
   @IsOptional()
-  @IsString()
-  tags?: string;
+  @IsArray()
+  @IsString({ each: true })
+  tags?: Array<string>;
 
   @IsOptional()
   @IsNumber()
@@ -183,4 +184,52 @@ export class AnimeQueryDto {
   @IsOptional()
   @Type(() => Number)
   offset?: number;
+}
+
+export interface IntlText {
+  en?: string;
+  es?: string;
+  en_jp?: string;
+  ja_jp?: string;
+}
+
+export class AnimeTagResponseDto {
+  @Expose()
+  id: string;
+  @Expose()
+  slug: string;
+  @Expose()
+  name: IntlText;
+}
+
+export class AnimeDto {
+  @Expose()
+  @Transform(({ obj }) => obj._id.toString())
+  id: string;
+
+  @Expose()
+  slug: string;
+
+  @Expose()
+  titles: IntlText;
+  @Expose()
+  canonicalTitle: string;
+  @Expose()
+  synopsis: string;
+  @Expose()
+  description: string;
+  @Expose()
+  stars: { [key: number]: number };
+  @Expose()
+  tags: AnimeTagResponseDto[];
+  @Expose()
+  posterImage: string;
+  @Expose()
+  coverImage: string;
+  @Expose()
+  nsfw: boolean;
+  @Expose()
+  status: string;
+  @Expose()
+  showType: string;
 }

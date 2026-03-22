@@ -1,5 +1,5 @@
 import { IsString, IsOptional, ValidateNested, IsBoolean, IsNumber } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Type, Expose, Transform } from 'class-transformer';
 
 class IntlTextDto {
   @IsOptional()
@@ -49,4 +49,29 @@ export class TagQueryDto {
   @IsOptional()
   @Type(() => Number)
   offset?: number;
+}
+
+export interface IntlText {
+  en?: string;
+  es?: string;
+  en_jp?: string;
+  ja_jp?: string;
+}
+
+export class TagResponseDto {
+  @Expose()
+  @Transform(({ obj }) => obj._id.toString())
+  id: string;
+
+  @Expose()
+  slug: string;
+
+  @Expose()
+  name: IntlText;
+
+  @Expose()
+  description: IntlText;
+
+  @Expose()
+  nsfw: boolean;
 }

@@ -1,4 +1,5 @@
 import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { Expose, Transform } from 'class-transformer';
 
 export class CreateUserNotificationDto {
   @IsString()
@@ -20,4 +21,28 @@ export class CreateUserNotificationDto {
   @IsString()
   @IsOptional()
   link?: string;
+}
+
+export class UserNotificationResponseDto {
+  @Expose()
+  @Transform(({ obj }) => obj._id.toString())
+  id: string;
+
+  @Expose()
+  userId: string;
+
+  @Expose()
+  title: string;
+
+  @Expose()
+  description: string;
+
+  @Expose()
+  imageLink: string;
+
+  @Expose()
+  link: string;
+
+  @Expose()
+  viewed: boolean;
 }

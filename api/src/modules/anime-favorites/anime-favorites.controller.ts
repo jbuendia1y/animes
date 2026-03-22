@@ -8,42 +8,75 @@ import {
   Param,
   Query,
   UseGuards,
-} from '@nestjs/common';
-import { AnimeFavoritesService } from './anime-favorites.service';
+} from "@nestjs/common";
+import { AnimeFavoritesService } from "./anime-favorites.service";
 import {
   CreateAnimeFavoriteDto,
   UpdateAnimeFavoriteDto,
   AnimeFavoriteQueryDto,
-} from './dto/anime-favorite.dto';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
-import { CurrentUser, CurrentUserData } from '../../common/decorators/current-user.decorator';
+  AnimeFavoriteResponseDto,
+} from "./dto/anime-favorite.dto";
+import { JwtAuthGuard } from "../../common/guards/jwt-auth.guard";
+import {
+  CurrentUser,
+  CurrentUserData,
+} from "../../common/decorators/current-user.decorator";
+import { plainToInstance } from "class-transformer";
 
-@Controller('animes/favorites')
+@Controller("animes/favorites")
 @UseGuards(JwtAuthGuard)
 export class AnimeFavoritesController {
   constructor(private readonly animeFavoritesService: AnimeFavoritesService) {}
 
   @Get()
-  findAll(@CurrentUser() user: CurrentUserData, @Query() query: AnimeFavoriteQueryDto) {
-    return this.animeFavoritesService.findAll(user.id, query);
+  async findAll(
+    @CurrentUser() user: CurrentUserData,
+    @Query() query: AnimeFavoriteQueryDto,
+  ) {
+    const { data, meta } = await this.animeFavoritesService.findAll(
+      user.id,
+      query,
+    );
+    return {
+      data: plainToInstance(AnimeFavoriteResponseDto, data, {
+        excludeExtraneousValues: true,
+      }),
+      meta,
+    };
   }
 
   @Post()
-  create(@CurrentUser() user: CurrentUserData, @Body() createDto: CreateAnimeFavoriteDto) {
-    return this.animeFavoritesService.create(user.id, createDto);
+  async create(
+    @CurrentUser() user: CurrentUserData,
+    @Body() createDto: CreateAnimeFavoriteDto,
+  ) {
+    const favorite = await this.animeFavoritesService.create(
+      user.id,
+      createDto,
+    );
+    return plainToInstance(AnimeFavoriteResponseDto, favorite, {
+      excludeExtraneousValues: true,
+    });
   }
 
-  @Patch(':id')
-  update(
+  @Patch(":id")
+  async update(
     @CurrentUser() user: CurrentUserData,
-    @Param('id') id: string,
+    @Param("id") id: string,
     @Body() updateDto: UpdateAnimeFavoriteDto,
   ) {
-    return this.animeFavoritesService.update(id, user.id, updateDto);
+    const favorite = await this.animeFavoritesService.update(
+      id,
+      user.id,
+      updateDto,
+    );
+    return plainToInstance(AnimeFavoriteResponseDto, favorite, {
+      excludeExtraneousValues: true,
+    });
   }
 
-  @Delete(':id')
-  delete(@CurrentUser() user: CurrentUserData, @Param('id') id: string) {
+  @Delete(":id")
+  delete(@CurrentUser() user: CurrentUserData, @Param("id") id: string) {
     return this.animeFavoritesService.delete(id, user.id);
   }
 }

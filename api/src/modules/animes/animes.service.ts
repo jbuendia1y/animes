@@ -25,8 +25,7 @@ export class AnimesService {
       filter.status = query.status;
     }
     if (query.tags) {
-      const tagsArray = query.tags.split(",");
-      filter["tags.slug"] = { $in: tagsArray };
+      filter["tags.slug"] = { $in: query.tags };
     }
 
     const limit = query.limit || 25;
@@ -58,7 +57,9 @@ export class AnimesService {
   }
 
   async findOne(id: string): Promise<AnimeDocument | null> {
+    console.log("PASSED ID IS: " + id);
     if (!Types.ObjectId.isValid(id)) {
+      console.log("NO ES UN ID OBJECT VALIDO");
       return null;
     }
     return this.animeModel.findById(id).exec();

@@ -41,12 +41,22 @@ export function NewChapterModal({ animeId, open, onClose }: Props) {
     register,
     formState: { errors },
     setError,
-  } = useForm<Form>();
+  } = useForm<Form>({
+    defaultValues: {
+      airdate: "",
+      canonicalTitle: "",
+      description: "",
+      number: 1,
+      synopsis: "",
+      thumbnail: "",
+      titles: {},
+    },
+  });
 
   const onSubmit = async (data: Form) => {
     let toCreate: CreateChapter | undefined = undefined;
     try {
-      toCreate = new CreateChapter({ ...(data as any), animeId });
+      toCreate = new CreateChapter({ ...data, animeId });
     } catch (err: any) {
       if (err instanceof z.ZodError) {
         err.issues.forEach((v) => {
@@ -90,7 +100,11 @@ export function NewChapterModal({ animeId, open, onClose }: Props) {
         >
           Nuevo episodio
         </Typography>
-        <Stack spacing={2} component="form" onSubmit={handleSubmit(onSubmit)}>
+        <Stack
+          spacing={2}
+          component="form"
+          onSubmit={handleSubmit(onSubmit, (err) => console.error(err))}
+        >
           <TextField
             label="Miniatura"
             type="url"

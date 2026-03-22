@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import {
   DefaultPlayerCtxValue,
   PlayerContext,
@@ -12,11 +12,9 @@ import { ChapterVideoService } from "../../services";
 export function PlayerProvider({
   chapterId,
   children,
-}: {
+}: PropsWithChildren<{
   chapterId?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  children: any;
-}) {
+}>) {
   const [data, setData] = useState<PlayerCtxValue>(DefaultPlayerCtxValue);
 
   useEffect(() => {

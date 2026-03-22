@@ -1,5 +1,6 @@
 import { ThemeProvider, createTheme } from "@mui/material";
 import { ArrowNextIcon, ArrowPrevIcon } from "../components/icons";
+import { PropsWithChildren } from "react";
 
 const theme = createTheme({
   palette: {
@@ -47,7 +48,6 @@ const theme = createTheme({
   },
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function MaterialTheme({ children }: { children: any }) {
+export function MaterialTheme({ children }: PropsWithChildren) {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }

@@ -1,8 +1,8 @@
+import { PropsWithChildren } from "react";
 import { MaterialTheme } from "./MaterialTheme";
 import { AuthProvider } from "./auth";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function Contexts({ children }: { children: any }) {
+export function Contexts({ children }: PropsWithChildren) {
   return (
     <MaterialTheme>
       <AuthProvider>{children}</AuthProvider>
